@@ -5,6 +5,6 @@ public class SSocietyClient
 	public static void main(String[] args)
 	{
 		System.out.println("Hello World!");
-		System.out.println("I have done it!");
+		System.out.println("Hurry up!");
 	}
 }
