@@ -104,16 +104,25 @@ public class SSocietyClient
 			}
 			else if (chosenOption == 2)
 			{	
-				String userName;
-				String password;
+				boolean success = false;
 				
-				System.out.print("Enter your username: ");
-				userName = userInput.next();
-				System.out.print("Enter your password: ");
-				password = userInput.next();
-				
-				Login userLogin = new Login(userName, password);
+				while(!success)
+				{ 
+					String userName;
+					String password;
+					
+					System.out.print("Enter your username: ");
+					userName = userInput.next();
+					System.out.print("Enter your password: ");
+					password = userInput.next();
+					
+					Login userLogin = new Login(userName, password);
+					
+					success = userLogin.checkLogin();
+				}
 			}
+				
+				
 			//clean screen
 		}
 	}
