@@ -1,5 +1,6 @@
 package main;
 
+import java.io.*;
 import java.util.Scanner;
 
 public class SSocietyClient
@@ -14,7 +15,7 @@ public class SSocietyClient
 		nextStep = userInput.next();
 	}
 	
-	public static void registrationScreen(Scanner userInput)
+	public static void registrationScreen(Scanner userInput) throws IOException
 	{
 		int chosenOption = 0;
 		
@@ -54,7 +55,7 @@ public class SSocietyClient
 					if (userRegistration.check() == 0) 
 					{
 						success = 1;
-						System.out.println("Success! Welcome to SSociety!");
+						System.out.println("Registration concluded... Wait for admin's decision.");
 						System.out.println("Press Enter to continue...");
 						
 						nextStep = userInput.next();
@@ -79,13 +80,22 @@ public class SSocietyClient
 						nextStep = userInput.next();
 						//clear screen
 					}
+					else if (userRegistration.check() == 3)
+					{
+						System.out.println("Registration request already done.");
+						System.out.println("Please wait for admin's decision...");
+						System.out.print("Press Enter key to continue...");
+						
+						nextStep = userInput.next();
+						//clear screen
+					}
 				}
 			}
 			//clean screen
 		}
 	}
 	
-	public static void loginScreen (Scanner userInput)
+	public static void loginScreen (Scanner userInput) throws IOException
 
 	{	
 		int chosenOption = 0;
@@ -106,7 +116,7 @@ public class SSocietyClient
 			{	
 				boolean success = false;
 				
-				while(!success)
+				while(success == false)
 				{ 
 					String userName;
 					String password;
@@ -128,7 +138,7 @@ public class SSocietyClient
 	}
 	
 	
-	public static void firstScreen(Scanner userInput)
+	public static void firstScreen(Scanner userInput) throws IOException
 	{	
 		int chosenOption = 0;
 		
@@ -166,7 +176,7 @@ public class SSocietyClient
 	}
 	
 	
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{	
 		Scanner userInput = new Scanner (System.in);
 		firstScreen(userInput);
