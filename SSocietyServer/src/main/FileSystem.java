@@ -63,7 +63,7 @@ public class FileSystem
 		{
 			f2.createNewFile();
 			BufferedWriter writer2 = new BufferedWriter(new FileWriter(file2));
-			writer2.write("admin|");
+			writer2.write("admin");
 			writer2.close();
 		}
 		
@@ -83,7 +83,7 @@ public class FileSystem
 		{
 			f3.createNewFile();
 			BufferedWriter writer3 = new BufferedWriter(new FileWriter(file3));
-			writer3.write("elonmusk|");
+			writer3.write("elonmusk");
 			writer3.close();
 		}
 		
