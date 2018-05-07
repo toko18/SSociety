@@ -1,12 +1,12 @@
 package main;
 
+import java.io.IOException;
 import java.util.Scanner;
-
 import util.Help;
 import util.Screen;
 
 public class SSocietyServer
-{
+{	
 	private static Scanner stdin = new Scanner(System.in);
 	
 	public static void firstScreen()
@@ -45,26 +45,45 @@ public class SSocietyServer
 			else if(chosenOption == 3)
 			{
 				Screen.clear();
-				Help.screen("firstScreen");
-				System.out.println("Press Enter to leave the help screen and return to the previous menu.");
-				stdin.nextLine();
-				continue;
+				helpScreen("firstScreen");
 			}
 			else if(chosenOption == 4)
 			{
 				Screen.clear();
 				System.exit(0);
 			}
-			
-			Screen.clear();
-			System.out.println("Invalid input!");
-			System.out.println("--------------");
-			System.out.println();
+			else
+			{
+				Screen.clear();
+				System.out.println("Invalid input!");
+				System.out.println("--------------");
+				System.out.println();
+			}
 		}
+	}
+	
+	public static void loginScreen()
+	{
+		
+	}
+	
+	public static void helpScreen(String current)
+	{
+		Help.screen(current);
+		System.out.println("Press Enter to leave the help screen and return to the previous menu.");
+		stdin.nextLine();
 	}
 	
 	public static void main(String[] args)
 	{
+		try
+		{
+			FileSystem.setup();
+		}
+		catch (IOException e)
+		{
+		}
+		
 		firstScreen();
 	}
 }
