@@ -1,27 +1,29 @@
 package main;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Registration {
-	private String userName;
+	private String username;
 	private String firstPassword;
 	private String secondPassword;
 	private String pathHome = System.getProperty("user.home");
 	
 	Registration(String u, char[] fPassword, char[] sPassword)
 	{
-		userName = u;
+		username = u;
 		firstPassword = new String(fPassword);
 		secondPassword = new String(sPassword);
 	}
 	
-	public int check() throws IOException
+	public int checkRegistration() throws IOException
 	{
-		String allUsersDirectory = pathHome + "SSociety_data/Users/AllUsers/";
-		String pendingDirectory = pathHome + "SSociety_data/Users/PendingUsers";
+		String allUsersDirectory = pathHome + "/SSociety_data/Users/AllUsers/";
+		String pendingDirectory = pathHome + "/SSociety_data/Users/PendingOthers/";
 		
-		File userDir = new File(allUsersDirectory + "/" + userName);
-		File pendingDir = new File(pendingDirectory + "/" + userName);
+		File userDir = new File(allUsersDirectory + username);
+		File pendingDir = new File(pendingDirectory + username);
 		
 		if(userDir.exists() && userDir.isDirectory())
 		{
@@ -35,9 +37,17 @@ public class Registration {
 		if (!firstPassword.equals(secondPassword)) {
 			return 2;
 		}
-
+		
+		for (int i = 0; i < username.length(); i++)
+		{
+			if(username.charAt(i) == '|')
+			{
+				return 4;
+			}
+		}
+		
 		pendingDir.mkdir();
-		File passwordFile = new File(pendingDirectory + "/password.txt");
+		File passwordFile = new File(pendingDirectory + username + "/password.txt");
 		FileWriter addContent = new FileWriter(passwordFile);
 		
 		addContent.write(firstPassword);
@@ -45,5 +55,4 @@ public class Registration {
 		
 		return 0;
 	}
-
 }

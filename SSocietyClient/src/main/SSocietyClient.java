@@ -1,15 +1,15 @@
 package main;
 
 import java.io.Console;
-import java.io.File;
 import java.io.IOException;
 
 import util.Screen;
 
+
 public class SSocietyClient
 {
 	private static Console cons = System.console();
-	private static String pathHome = System.getProperty("user.home");
+	static String pathHome = System.getProperty("user.home");
 	
 	public static void helpScreen()
 	{
@@ -22,56 +22,70 @@ public class SSocietyClient
 	{
 		int chosenOption = 0;
 		
-		System.out.println("1 - Back");
-		System.out.println("2 - Continue");
-		
-		try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
-		catch(Exception e) { chosenOption = 0; }
-		
-		if(chosenOption == 1)
+		while(true)
 		{
-			Screen.clear();
-			firstScreen();
-		}
-		else if (chosenOption == 2)
-		{	
-			Screen.clear();
-			String username;
-			char[] firstPassword;
-			char[] secondPassword;
+			System.out.println("1 - Back");
+			System.out.println("2 - Continue");
 			
-			while(true)
+			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
+			catch(Exception e) { chosenOption = 0; Screen.clear();}
+			
+			if(chosenOption == 1)
 			{
+				Screen.clear();
+				firstScreen();
+			}
+			else if (chosenOption == 2)
+			{	
+				Screen.clear();
+				String username;
+				char[] firstPassword;
+				char[] secondPassword;
+				
+				System.out.println("Registration...");
+				System.out.println();
 				username = cons.readLine("Choose your username: ");
 				firstPassword = cons.readPassword("Choose your password: ");
-				secondPassword = cons.readPassword("Enter chosen password agin: ");
+				secondPassword = cons.readPassword("Enter chosen password again: ");
 				
 				Registration userRegistration = new Registration(username, firstPassword, secondPassword);
 				
-				if (userRegistration.check() == 0) 
+				if (userRegistration.checkRegistration() == 0) 
 				{
-					System.out.println("Registration concluded... Wait for admin's decision.");
+					Screen.clear();
+					System.out.println("Congratulations! Registration concluded...");
+					System.out.println("Wait for admin's decision.");
 					cons.readLine("Press Enter to continue...");
+					Screen.clear();
 					firstScreen();
 					
 				}
-				else if (userRegistration.check() == 1)
+				else if (userRegistration.checkRegistration() == 1)
 				{
+					Screen.clear();
 					System.out.println("A user with this name already exists...");
-					System.out.println("Try again");
+					System.out.println("Choose another username and try again.");
 					cons.readLine("Press Enter to continue...");
 				}
-				else if (userRegistration.check() == 2)
+				else if (userRegistration.checkRegistration() == 2)
 				{
+					Screen.clear();
 					System.out.println("Entered passwords don't match");
 					cons.readLine("Press Enter to continue...");
 				}
-				else if (userRegistration.check() == 3)
+				else if (userRegistration.checkRegistration() == 3)
 				{
+					Screen.clear();
 					System.out.println("Registration request already done.");
 					System.out.println("Please wait for admin's decision...");
 					cons.readLine("Press Enter to continue...");
 					
+				}
+				else if (userRegistration.checkRegistration() == 4)
+				{
+					Screen.clear();
+					System.out.println("Your username can not contain the character '|'.");
+					cons.readLine("Press Enter to continue...");
 				}
 				Screen.clear();
 			}
@@ -92,33 +106,39 @@ public class SSocietyClient
 			catch(Exception e) { chosenOption = 0; }
 			
 			if(chosenOption == 1)
-			{
+			{	
+				Screen.clear();
 				firstScreen();
 			}
 			else if (chosenOption == 2)
 			{	
+				Screen.clear();
 				boolean success = false;
 				
-				while(success == false)
-				{ 
-					String username;
-					char[] password;
-					
-					username = cons.readLine("Username: ");
-					password = cons.readPassword("Password: ");
-					
-					Login userLogin = new Login(username, password);
-					
-					try { success = userLogin.checkLogin(); }
-					catch(IOException e) { }
-					
-					if(success)
-					{
-						Screen.clear();
-						System.out.println("You are logged in!");
-						//login animation
-						//displays new screen -- inicio de sessao
-					}
+				String username;
+				char[] password;
+				
+				System.out.println("Login...");
+				System.out.println();
+				username = cons.readLine("Username: ");
+				password = cons.readPassword("Password: ");
+				
+				Login userLogin = new Login(username, password);
+				
+				success = userLogin.checkLogin();
+				
+				if(success)
+				{
+					Screen.clear();
+					System.out.println("You are logged in!");
+					cons.readLine("Press Enter to continue...");
+					//login animation
+					//displays new screen -- inicio de sessao
+				}
+				else
+				{
+					cons.readLine("Press Enter to continue...");
+					Screen.clear();
 				}
 			}	
 			Screen.clear();
@@ -157,7 +177,8 @@ public class SSocietyClient
 				//cat file with help instruction --> toko18
 			}
 			else if(chosenOption == 4)
-			{
+			{	
+				Screen.clear();
 				System.exit(0);
 			}
 			Screen.clear();
@@ -167,20 +188,16 @@ public class SSocietyClient
 	
 	public static void main(String[] args) throws IOException 
 	{	
-		String programData = pathHome + "/SSociety_data";
-		File directoryCheck = new File(programData);
-		
-		if(directoryCheck.exists())
+		if(!FileSystem.checkFileSystem())
 		{
-			firstScreen();
+			cons.readLine("Press Enter to continue...");
+			Screen.clear();
+			System.exit(0);
 		}
 		else
-		{
-			System.out.println("Problem found while trying to start the program...");
-			System.out.println("Wait for an admin to fix it. Sorry for the trouble...");
-			System.out.println();
-			cons.readLine("Press Enter key to quit... ");
-			System.exit(0);
+		{	
+			Screen.clear();
+			firstScreen();
 		}
 	}
 }

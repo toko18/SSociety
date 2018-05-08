@@ -2,6 +2,8 @@ package main;
 
 import java.io.*;
 
+import util.Screen;
+
 public class Login {
 	private String userName;
 	private String password;
@@ -15,27 +17,45 @@ public class Login {
 	
 	public boolean checkLogin() throws IOException
 	{	
-		String userDirectory = pathHome + "/" + "SSociety_data/Users/AllUsers/" + userName;
-		String userPassword = pathHome + "/" + "SSociety_data/Users/AllUsers/" + userName + "/password.txt";
+		String userDirectory = pathHome + "/SSociety_data/Users/AllUsers/" + userName;
+		String userPassword = pathHome + "/SSociety_data/Users/AllUsers/" + userName + "/password.txt";
+		String pendingDirectory = pathHome + "/SSociety_data/Users/PendingOthers/" + userName;
 		
+		File checkPending = new File(pendingDirectory);
 		File userDir = new File(userDirectory);
-		BufferedReader getContent = new BufferedReader(new FileReader(userPassword));
-		getContent.close();
+		
 		
 		if (userDir.exists()) 
 		{
+			BufferedReader getContent = new BufferedReader(new FileReader(userPassword));
 			String toCheckPassword = getContent.readLine();
+			getContent.close();
+			
 			if(password.equals(toCheckPassword)) 
 			{
 				return true;
 			}
 			else 
-			{
+			{	
+				Screen.clear();
+				System.out.println("Wrong password! Try again");
 				return false;
 			}
 		}
 		else 
-		{
+		{	
+			if(checkPending.exists())
+			{
+				Screen.clear();
+				System.out.println("This user is waiting admin's approval.");
+				System.out.println("Please wait for the decision...");
+			}
+			else
+			{
+				Screen.clear();
+				System.out.println("User not registered!");
+				System.out.println("Go back and do your registration...");
+			}
 			return false;
 		}		
 	}
