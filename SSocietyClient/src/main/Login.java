@@ -7,10 +7,10 @@ public class Login {
 	private String password;
 	private String pathHome = System.getProperty("user.home");
 	
-	Login (String u, String p)
+	Login (String u, char[] p)
 	{
 		userName = u;
-		password = p;
+		password = new String(p);
 	}
 	
 	public boolean checkLogin() throws IOException
@@ -20,6 +20,7 @@ public class Login {
 		
 		File userDir = new File(userDirectory);
 		BufferedReader getContent = new BufferedReader(new FileReader(userPassword));
+		getContent.close();
 		
 		if (userDir.exists()) 
 		{

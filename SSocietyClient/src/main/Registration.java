@@ -8,11 +8,11 @@ public class Registration {
 	private String secondPassword;
 	private String pathHome = System.getProperty("user.home");
 	
-	Registration(String u, String fPassword, String sPassword)
+	Registration(String u, char[] fPassword, char[] sPassword)
 	{
 		userName = u;
-		firstPassword = fPassword;
-		secondPassword = sPassword;
+		firstPassword = new String(fPassword);
+		secondPassword = new String(sPassword);
 	}
 	
 	public int check() throws IOException
@@ -37,7 +37,7 @@ public class Registration {
 		}
 
 		pendingDir.mkdir();
-		File passwordFile = new File(pendingDirectory + "/" + userName);
+		File passwordFile = new File(pendingDirectory + "/password.txt");
 		FileWriter addContent = new FileWriter(passwordFile);
 		
 		addContent.write(firstPassword);
