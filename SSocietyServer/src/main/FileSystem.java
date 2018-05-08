@@ -5,8 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// The method ('setup') of this class will be called whenever the program executes,
+//   to create the default file system of the network data.
+// The data is kept in a directory named SSociety_data, inside home directory of the computer user
+//
+// In case some default file is deleted, the method will create it, without compromising the other files.
+
 public class FileSystem
 {
+	// Finds the path of user's computer home directory
 	private static String pathHome = System.getProperty("user.home");
 	
 	public static void setup() throws IOException

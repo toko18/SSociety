@@ -1,5 +1,8 @@
 package util;
 
+// The method ('screen') of this class can be called on any screen (whose name is given as argument)
+//   and will print instructions on how to interact with that screen.
+
 public class Help
 {
 	public static void screen(String current)

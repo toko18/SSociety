@@ -1,5 +1,7 @@
 package util;
 
+// The method ('clear') is used to "clear" the terminal
+
 public class Screen
 {
 	public static void clear()
