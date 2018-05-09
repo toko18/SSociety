@@ -28,17 +28,17 @@ public class Login
 	{	
 		// Creating File objects, that the method needs to check if exist, in order to determine if the login is valid or not.
 		
-		String userDirectory = pathHome + "/SSociety_data/Users/AllUsers/" + username;
-		File userDir = new File(userDirectory + "/");
+		String dirUserS = pathHome + "/SSociety_data/Users/AllUsers/" + username;
+		File dirUser = new File(dirUserS + "/");
 		
-		String userDirPending = pathHome + "/SSociety_data/Users/PendingAdmins/" + username;
-		File userDirPend = new File(userDirPending + "/");
+		String dirUserPendingAS = pathHome + "/SSociety_data/Users/PendingAdmins/" + username;
+		File dirUserPendingA = new File(dirUserPendingAS + "/");
 		
-		String userDirPending2 = pathHome + "/SSociety_data/Users/PendingOthers/" + username;
-		File userDirPend2 = new File(userDirPending2 + "/");
+		String dirUserPendingOS = pathHome + "/SSociety_data/Users/PendingOthers/" + username;
+		File dirUserPendingO = new File(dirUserPendingOS + "/");
 		
-		String userDirBanned = pathHome + "/SSociety_data/Users/Banned/" + username;
-		File userDirBan = new File(userDirBanned + "/");
+		String dirUserBannedS = pathHome + "/SSociety_data/Users/Banned/" + username;
+		File dirUserBanned = new File(dirUserBannedS + "/");
 		
 		// Here we used the method 'getCanonicalPath' because the 'exists' method isn't case sensitive
 		//   and so, without using the second condition of the statements, a user with username "admin"
@@ -47,7 +47,7 @@ public class Login
 		//   we decided to keep those conditions.
 		
 		// Checks if the account is activated.
-		if (userDir.exists() && userDir.getCanonicalPath().equals(userDirectory))
+		if (dirUser.exists() && dirUser.getCanonicalPath().equals(dirUserS))
 		{
 			File admins = new File(pathHome + "/SSociety_data/Users/admins.txt");
 			BufferedReader getAdmins = new BufferedReader(new FileReader(admins));
@@ -74,21 +74,20 @@ public class Login
 			// At this point, the program knows that the account is a valid one and that it belongs to an admin
 			//   so it checks if the password is correct.
 			
-			String userPassword = userDirectory + "/password.txt";
-			BufferedReader getContent = new BufferedReader(new FileReader(userPassword));
+			String userPassword = dirUserS + "/password.txt";
+			BufferedReader reader = new BufferedReader(new FileReader(userPassword));
 			
-			String toCheckPassword = getContent.readLine();
+			String toCheckPassword = reader.readLine();
+			
+			reader.close();
 			
 			// If the password is correct, the login will succeed.
 			if(password.equals(toCheckPassword))
-			{
-				getContent.close();
 				return true;
-			}
+			
 			// Else, the password is wrong and it returns false (login failed).
 			else
 			{
-				getContent.close();
 				Screen.clear();
 				System.out.println("Wrong password!");
 				return false;
@@ -97,7 +96,7 @@ public class Login
 		
 		// The account is not activated,
 		//   so it checks if the account is sill waiting to be validated by an admin.
-		else if((userDirPend.exists() && userDirPend.getCanonicalPath().equals(userDirPending)) || (userDirPend2.exists() && userDirPend2.getCanonicalPath().equals(userDirPending2)))
+		else if((dirUserPendingA.exists() && dirUserPendingA.getCanonicalPath().equals(dirUserPendingAS)) || (dirUserPendingO.exists() && dirUserPendingO.getCanonicalPath().equals(dirUserPendingOS)))
 		{
 			Screen.clear();
 			System.out.println("Your account is not activated yet! :(");
@@ -110,7 +109,7 @@ public class Login
 		
 		// The account is neither registered nor activated,
 		//   so it checks if the account was banned by an admin.
-		else if((userDirBan.exists() && userDirBan.getCanonicalPath().equals(userDirBanned)))
+		else if(dirUserBanned.exists() && dirUserBanned.getCanonicalPath().equals(dirUserBannedS))
 		{
 			Screen.clear();
 			System.out.println("Your account was banned by an admin! :(");

@@ -26,5 +26,15 @@ public class Help
 			System.out.println("blablabla loginScreen");
 			System.out.println("-----------------------------------------");
 		}
+		
+		else if(current.equals("registrationScreen"))
+		{
+			System.out.println("-----------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla registrationScreen");
+			System.out.println("-----------------------------------------");
+		}
 	}
 }
