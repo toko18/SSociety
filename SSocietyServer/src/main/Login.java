@@ -90,6 +90,8 @@ public class Login
 			{
 				Screen.clear();
 				System.out.println("Wrong password!");
+				System.out.println("---------------");
+				System.out.println();
 				return false;
 			}
 		}

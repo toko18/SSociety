@@ -1,24 +1,28 @@
-package main;
+package logged;
 
 import java.io.File;
 import java.io.IOException;
 import util.FileSystem;
 import util.Screen;
 
-//This class is called when the user tries to register.
+// This class is called when the admin wants to directly register a new account.
 
-public class Registration
+public class DirectRegistration
 {
 	private String username;
 	private String password;
+	// Type of account: admin or other.
+	private String type;
 	private String pathHome = System.getProperty("user.home");
 	
-	// The constructor of Registration object receives the username (String) and the password (array of char's).
+	// The constructor of Registration object receives the username (String), the password (array of char's) and
+	//   the type of account (admin or normal/other account).
 	
-	Registration(String u, char[] p)
+	DirectRegistration(String u, char[] p, String t)
 	{
 		username = u;
 		password = new String(p);
+		type = t;
 	}
 	
 	// The method 'checkRegistration' checks if the username already exists and if it doesn't, registers the new account.
@@ -47,8 +51,8 @@ public class Registration
 		{
 			Screen.clear();
 			System.out.println("That username is already in use!");
-			System.out.println("Try to register with another username.");
-			System.out.println("--------------------------------------");
+			System.out.println("Try to create with another username.");
+			System.out.println("------------------------------------");
 			System.out.println();
 			return false;
 		}
@@ -58,11 +62,9 @@ public class Registration
 		else if(dirUserPendingA.exists() || dirUserPendingO.exists())
 		{
 			Screen.clear();
-			System.out.println("Your account is not activated yet! :(");
-			System.out.println("It looks like you have already registered your account.");
-			System.out.println("Please wait until an admin validate your registration.");
-			System.out.println("Sorry for any inconvenience.");
-			System.out.println("-------------------------------------------------------");
+			System.out.println("This account was already registered and is waiting for admin's validation.");
+			System.out.println("Try to create with another username.");
+			System.out.println("--------------------------------------------------------------------------");
 			System.out.println();
 			return false;
 		}
@@ -72,20 +74,18 @@ public class Registration
 		else if(dirUserBanned.exists())
 		{
 			Screen.clear();
-			System.out.println("Oops! :(");
-			System.out.println("It looks like an account with that same username was banned.");
-			System.out.println("Try to register with another username.");
-			System.out.println("Sorry for any inconvenience.");
-			System.out.println("------------------------------------------------------------");
+			System.out.println("An account with that same username was banned.");
+			System.out.println("Try to create with another username.");
+			System.out.println("----------------------------------------------");
 			System.out.println();
 			return false;
 		}
 		
 		// The account is neither registered nor activated nor banned, which means that it doesn't exist.
-		// The account will be created (calling 'FileSystem.newUser') and the registration will succeed.
+		// The account will be created (calling 'FileSystem.newDirect') and the registration will succeed.
 		else
 		{
-			FileSystem.newAdmin(username, password);
+			FileSystem.newDirect(username, password, type);
 			return true;
 		}
 	}

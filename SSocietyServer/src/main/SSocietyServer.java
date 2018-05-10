@@ -2,16 +2,19 @@ package main;
 
 import java.io.Console;
 import java.io.IOException;
+import logged.Home;
 import util.FileSystem;
 import util.Help;
 import util.Screen;
+
+// 'SSocietyServer' is the main class of the program.
 
 public class SSocietyServer
 {	
 	// A Console object ('cons') will be used to read the user input.
 	private static Console cons = System.console();
 	
-	// First screen - this is the initial "screen".
+	// First Screen - this is the initial "screen".
 	// Here, the user can choose between 4 options that will display their respective screen.
 	
 	public static void firstScreen()
@@ -35,23 +38,17 @@ public class SSocietyServer
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
 			catch(Exception e) { chosenOption = 0; }
 			
-			// If the input is 1, it leaves this screen (leaving the loop) and opens the login screen.
+			// If the input is 1, it opens the Login Screen.
 			if(chosenOption == 1)
-			{
 				loginScreen();
-				break;
-			}
 			
-			// If the input is 2, it leaves this screen (leaving the loop) and opens the registration screen.
+			// If the input is 2, it opens the Registration Screen.
 			else if(chosenOption == 2)
-			{
 				registrationScreen();
-				break;
-			}
 			
-			// If the input is 3, it opens the help screen corresponding to the current one (first screen).
+			// If the input is 3, it opens the Help Screen corresponding to the current one (First Screen).
 			else if(chosenOption == 3)
-				helpScreen("firstScreen");
+				helpScreen("SSocietyServer.firstScreen");
 			
 			// If the input is 4, the program closes.
 			else if(chosenOption == 4)
@@ -84,6 +81,8 @@ public class SSocietyServer
 		// The only way to leave the loop is to insert a valid input.
 		while(true)
 		{
+			System.out.println("Login");
+			System.out.println();
 			System.out.println("1 - Continue to login");
 			System.out.println("2 - Help");
 			System.out.println("3 - Back");
@@ -114,25 +113,27 @@ public class SSocietyServer
 				try { success = userLogin.checkLogin(); }
 				catch(IOException e) { }
 				
-				// In case of login success, the user gets in the system. ACABAR COMMENT
+				// In case of login success, the user gets in the system, and the Home's first screen is displayed.
 				if(success)
 				{
 					Screen.clear();
-					System.out.println("You are logged in!"); //test
-					//login animation
-					//displays new screen AND BREAKS THIS LOOP (MISSING)
+					System.out.println("You are logged in!"); //login animation
+					Home.firstScreen();
+					// By returning here, when the user logs out, it will go back to the very first screen.
+					return;
 				}
 			}
 			
-			// If the input is 2, it opens the help screen corresponding to the current one (login screen).
+			// If the input is 2, it opens the help screen corresponding to the current one (Login Screen).
 			else if(chosenOption == 2)
-				helpScreen("loginScreen");
+				helpScreen("SSocietyServer.loginScreen");
 			
-			// If the input is 3, it leaves this screen (leaving the loop) and goes back to the previous screen (first screen).
+			// If the input is 3, it leaves this screen and goes back to the previous one (First Screen).
 			else if(chosenOption == 3)
 			{
-				firstScreen();
-				break;
+				Screen.clear();
+				// By returning, it will go back to the First Screen.
+				return;
 			}
 			
 			// Else, if the input wasn't 1, 2 or 3, it is invalid (and it doesn't leave the while loop).
@@ -146,6 +147,9 @@ public class SSocietyServer
 		}
 	}
 	
+	// Registration Screen - this is the screen that displays when the user wants to register a new account.
+	// Here, the user can choose between 3 options that will display their respective screen.
+	
 	public static void registrationScreen()
 	{	
 		Screen.clear();
@@ -156,6 +160,8 @@ public class SSocietyServer
 		// The only way to leave the loop is to insert a valid input.
 		while(true)
 		{
+			System.out.println("Registration");
+			System.out.println();
 			System.out.println("1 - Continue to registration");
 			System.out.println("2 - Help");
 			System.out.println("3 - Back");
@@ -186,7 +192,7 @@ public class SSocietyServer
 				try { success = userRegistration.checkRegistration(); }
 				catch(IOException e) { }
 				
-				// In case of registration success, it stays on the registration screen.
+				// In case of registration success, it goes back to the First Screen.
 				if(success)
 				{
 					Screen.clear();
@@ -196,18 +202,21 @@ public class SSocietyServer
 					System.out.println("See you soon!");
 					System.out.println("-------------------------------------------------------------------------------------------");
 					System.out.println();
+					// By returning, it will go back to the First Screen.
+					return;
 				}
 			}
 			
-			// If the input is 2, it opens the help screen corresponding to the current one (registration screen).
+			// If the input is 2, it opens the help screen corresponding to the current one (Registration Screen).
 			else if(chosenOption == 2)
-				helpScreen("registrationScreen");
+				helpScreen("SSocietyServer.registrationScreen");
 			
-			// If the input is 3, it leaves this screen (leaving the loop) and goes back to the previous screen (first screen).
+			// If the input is 3, it leaves this screen and goes back to the previous screen (First Screen).
 			else if(chosenOption == 3)
 			{
-				firstScreen();
-				break;
+				Screen.clear();
+				// By returning, it will go back to the First Screen.
+				return;
 			}
 			
 			// Else, if the input wasn't 1, 2 or 3, it is invalid (and it doesn't leave the while loop).
@@ -221,12 +230,14 @@ public class SSocietyServer
 		}
 	}
 	
-	// Help screen - this is the "screen" that can be called in any other screen, when the user chooses the 'Help' option.
+	// Help Screen - this is the screen that can be called in any other screen, when the user chooses the 'Help' option.
 	// This screen prints instructions on how to interact with the screen where it is called.
 	
 	public static void helpScreen(String current)
 	{
 		Screen.clear();
+		System.out.println("Help");
+		System.out.println();
 		// Calls 'screen' method of 'Help' class for the current screen, that will display instructions.
 		Help.screen(current);
 		// In order to leave the help screen, the user has to press Enter.

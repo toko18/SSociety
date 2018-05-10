@@ -122,16 +122,16 @@ public class FileSystem
 		{
 			subsAdmin.createNewFile();
 			BufferedWriter writer4 = new BufferedWriter(new FileWriter(subsAdminS));
-			writer4.write("About SSociety| ");
+			writer4.write("About SSociety|.");
 			writer4.close();
 		}
 	}
 	
-	// The method 'newUser' will be called when a new account registration occurs.
+	// The method 'newAdmin' will be called when a new account registration occurs.
 	// This method creates the default files of a new user (in this program context, an admin) with the username
 	//   and password that receives as arguments (String's).
 	
-	public static void newUser(String u, String p) throws IOException
+	public static void newAdmin(String u, String p) throws IOException
 	{
 		// Has this program only registers admins, the new account files will go for the 'PendingAdmins' folder.
 		String dirUserS = pendingAS + u + "/";
@@ -158,7 +158,52 @@ public class FileSystem
 		subsUser.createNewFile();
 		BufferedWriter writer2 = new BufferedWriter(new FileWriter(subsUserS));
 		// All users are subscribed to the 'About SSociety' topic.
-		writer2.write("About SSociety| ");
+		writer2.write("About SSociety|.");
 		writer2.close();
+	}
+	
+	// The method 'newDirect' will be called when a new direct registration occurs ('DirectRegistration' class).
+	// This method creates the default files of a new user (admin or normal user) with the username
+	//   and password that receives as arguments (String's). The third argument is the type of user (is says
+	//   if it's an admin account ("admin") or a normal account ("other").
+	
+	public static void newDirect(String u, String p, String t) throws IOException
+	{
+		// The new account files will go directly for the "AllUsers" folder, as they are being directly created,
+		//   without needing admin's validation.
+		String dirUserS = allUsersS + u + "/";
+		File dirUser = new File(dirUserS);
+		dirUser.mkdir();
+		
+		String passUserS = dirUserS + "password.txt";
+		File passUser = new File(passUserS);
+		passUser.createNewFile();
+		BufferedWriter writer1 = new BufferedWriter(new FileWriter(passUserS));
+		writer1.write(p);
+		writer1.close();
+		
+		String likesUserS = dirUserS + "likes.txt";
+		File likesUser = new File(likesUserS);
+		likesUser.createNewFile();
+		
+		String postsUserS = dirUserS + "posts.txt";
+		File postsUser = new File(postsUserS);
+		postsUser.createNewFile();
+		
+		String subsUserS = dirUserS + "subscriptions.txt";
+		File subsUser = new File(subsUserS);
+		subsUser.createNewFile();
+		BufferedWriter writer2 = new BufferedWriter(new FileWriter(subsUserS));
+		// All users are subscribed to the 'About SSociety' topic.
+		writer2.write("About SSociety|.");
+		writer2.close();
+		
+		// If the new account is for an admin, the username will be written to the 'admins.txt' file.
+		if(t.equals("admin"))
+		{
+			BufferedWriter writer3 = new BufferedWriter(new FileWriter(adminsS, true));
+			writer3.append("\n" + u);
+			writer3.close();
+		}
 	}
 }
