@@ -3,6 +3,7 @@ package main;
 import java.io.Console;
 import java.io.IOException;
 
+import logged.Home;
 import util.Screen;
 
 
@@ -58,6 +59,7 @@ public class SSocietyClient
 					cons.readLine("Press Enter to continue...");
 					Screen.clear();
 					firstScreen();
+					return;
 					
 				}
 				else if (userRegistration.checkRegistration() == 1)
@@ -109,6 +111,7 @@ public class SSocietyClient
 			{	
 				Screen.clear();
 				firstScreen();
+				return;
 			}
 			else if (chosenOption == 2)
 			{	
@@ -132,8 +135,11 @@ public class SSocietyClient
 					Screen.clear();
 					System.out.println("You are logged in!");
 					cons.readLine("Press Enter to continue...");
-					//login animation
-					//displays new screen -- inicio de sessao
+					Screen.clear();
+					
+					Home userAccount = new Home(username);
+					userAccount.homeScreen();
+					return;
 				}
 				else
 				{
@@ -166,14 +172,17 @@ public class SSocietyClient
 			{
 				Screen.clear();
 				loginScreen();
+				return;
 			}
 			else if(chosenOption == 2) {
 				Screen.clear();
 				registrationScreen();
+				return;
 			}
 			else if(chosenOption == 3)
 			{
 				helpScreen();
+				return;
 				//cat file with help instruction --> toko18
 			}
 			else if(chosenOption == 4)
