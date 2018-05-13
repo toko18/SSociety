@@ -10,11 +10,19 @@ public class Home
 {
 	// A Console object ('cons') will be used to read the user input.
 	private static Console cons = System.console();
+	private String loggedA;
+	
+	// The constructor of Home object receives the username (String) of the admin that logged in.
+	
+	public Home(String u)
+	{
+		loggedA = u;
+	}
 	
 	// First Screen - this is the initial "screen" after the admin logs in.
 	// Here, the admin can choose between 5 options that will display their respective screen.
 	
-	public static void firstScreen()
+	public void firstScreen()
 	{
 		int chosenOption = 0;
 		
@@ -29,6 +37,7 @@ public class Home
 			System.out.println("3 - Network statistics");
 			System.out.println("4 - Help");
 			System.out.println("5 - Logout");
+			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
@@ -54,7 +63,7 @@ public class Home
 			else if(chosenOption == 5)
 			{
 				Screen.clear();
-				System.out.println("You successfully logged out!");
+				System.out.println("You successfully logged out!"); //animation
 				System.out.println("----------------------------");
 				System.out.println();
 				// By returning here, it will go back to 'loginScreen',
@@ -67,8 +76,9 @@ public class Home
 			{
 				Screen.clear();
 				System.out.println("Invalid input!");
-				System.out.println("--------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 			}
 		}
 	}
@@ -76,7 +86,7 @@ public class Home
 	// Accounts Management Screen - this is the screen that displays when the admin wants to manage the network accounts.
 	// Here, the admin can choose between 5 options that will display their respective screen.
 	
-	public static void accountsScreen()
+	public void accountsScreen()
 	{
 		Screen.clear();
 		
@@ -93,6 +103,7 @@ public class Home
 			System.out.println("3 - Accounts banishment");
 			System.out.println("4 - Help");
 			System.out.println("5 - Back");
+			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
@@ -108,7 +119,7 @@ public class Home
 			
 			// If the input is 3, it leaves this screen and opens the Banishment Screen (from 'AccountsManagement' class).
 			else if(chosenOption == 3)
-				AccountsManagement.banishmentScreen();
+				AccountsManagement.banishmentScreen(loggedA);
 			
 			// If the input is 4, it opens the help screen corresponding to the current one (Accounts Management Screen).
 			else if(chosenOption == 4)
@@ -122,23 +133,24 @@ public class Home
 				return;
 			}
 			
-			// Else, if the input wasn't 1, 2 or 3, it is invalid (and it doesn't leave the while loop).
+			// Else, if the input wasn't 1, 2, 3, 4 or 5, it is invalid (and it doesn't leave the while loop).
 			else
 			{
 				Screen.clear();
 				System.out.println("Invalid input!");
-				System.out.println("--------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 			}
 		}
 	}
 	
-	public static void topicsScreen() //atençao ao numero maximo de mensagens
+	public void topicsScreen() //atençao ao numero maximo de mensagens
 	{
 		
 	}
 	
-	public static void statisticsScreen()
+	public void statisticsScreen()
 	{
 		
 	}
@@ -146,7 +158,7 @@ public class Home
 	// Help Screen - this is the screen that can be called in any other screen, when the user chooses the 'Help' option.
 	// This screen prints instructions on how to interact with the screen where it is called.
 	
-	public static void helpScreen(String current)
+	public void helpScreen(String current)
 	{
 		Screen.clear();
 		System.out.println("Help");

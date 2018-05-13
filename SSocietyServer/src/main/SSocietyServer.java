@@ -33,6 +33,7 @@ public class SSocietyServer
 			System.out.println("2 - Register");
 			System.out.println("3 - Help");
 			System.out.println("4 - Exit");
+			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
@@ -62,8 +63,9 @@ public class SSocietyServer
 			{
 				Screen.clear();
 				System.out.println("Invalid input!");
-				System.out.println("--------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 			}
 		}
 	}
@@ -86,6 +88,7 @@ public class SSocietyServer
 			System.out.println("1 - Continue to login");
 			System.out.println("2 - Help");
 			System.out.println("3 - Back");
+			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
@@ -118,7 +121,10 @@ public class SSocietyServer
 				{
 					Screen.clear();
 					System.out.println("You are logged in!"); //login animation
-					Home.firstScreen();
+					
+					// Creates a Home object and calls his first screen.
+					Home userHome = new Home(username);
+					userHome.firstScreen();
 					// By returning here, when the user logs out, it will go back to the very first screen.
 					return;
 				}
@@ -141,8 +147,9 @@ public class SSocietyServer
 			{
 				Screen.clear();
 				System.out.println("Invalid input!");
-				System.out.println("--------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 			}
 		}
 	}
@@ -165,6 +172,7 @@ public class SSocietyServer
 			System.out.println("1 - Continue to registration");
 			System.out.println("2 - Help");
 			System.out.println("3 - Back");
+			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
@@ -177,16 +185,19 @@ public class SSocietyServer
 				
 				String username;
 				char[] password;
+				char[] password2;
 				// Boolean value of registration success/fail.
 				boolean success = false;
 				
 				// Reads the username.
-				username = cons.readLine("Username: ");
+				username = cons.readLine("Choose your username: ");
 				// Reads the password.
-				password = cons.readPassword("Password: ");
+				password = cons.readPassword("Choose your password: ");
+				// Reads the password once again.
+				password2 = cons.readPassword("Enter chosen password again: ");
 				
 				// Creates a Registration object.
-				Registration userRegistration = new Registration(username, password);
+				Registration userRegistration = new Registration(username, password, password2);
 				
 				// Calls 'checkRegistration' and returns true/false, meaning if the registration has succeeded or not.
 				try { success = userRegistration.checkRegistration(); }
@@ -200,8 +211,9 @@ public class SSocietyServer
 					System.out.println("In order to be able to login, you have to wait until your account is validated by an admin.");
 					System.out.println("We promise you it will be fast!");
 					System.out.println("See you soon!");
-					System.out.println("-------------------------------------------------------------------------------------------");
-					System.out.println();
+					System.out.println("---------------------------");
+					cons.readPassword("Press Enter to continue...");
+					Screen.clear();
 					// By returning, it will go back to the First Screen.
 					return;
 				}
@@ -224,8 +236,9 @@ public class SSocietyServer
 			{
 				Screen.clear();
 				System.out.println("Invalid input!");
-				System.out.println("--------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 			}
 		}
 	}

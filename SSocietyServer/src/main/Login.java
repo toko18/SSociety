@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +11,10 @@ import util.Screen;
 
 public class Login
 {
+	// A Console object ('cons') will be used to read the user input.
+	// In this class, we only use it to wait for an interrupt (Enter key press).
+	private static Console cons = System.console();
+	
 	private String username;
 	private String password;
 	private String pathHome = System.getProperty("user.home");
@@ -26,19 +31,19 @@ public class Login
 	
 	public boolean checkLogin() throws IOException
 	{	
-		// Creating File objects, that the method needs to check if exist, in order to determine if the login is valid or not.
+		// Creating File objects, that the method needs to check if they exist, in order to determine if the login is valid or not.
 		
 		String dirUserS = pathHome + "/SSociety_data/Users/AllUsers/" + username;
 		File dirUser = new File(dirUserS + "/");
 		
-		String dirUserPendingAS = pathHome + "/SSociety_data/Users/PendingAdmins/" + username;
-		File dirUserPendingA = new File(dirUserPendingAS + "/");
+		String fileUserPendingAS = pathHome + "/SSociety_data/Users/PendingAdmins/" + username + ".txt";
+		File fileUserPendingA = new File(fileUserPendingAS);
 		
-		String dirUserPendingOS = pathHome + "/SSociety_data/Users/PendingOthers/" + username;
-		File dirUserPendingO = new File(dirUserPendingOS + "/");
+		String fileUserPendingOS = pathHome + "/SSociety_data/Users/PendingOthers/" + username + ".txt";
+		File fileUserPendingO = new File(fileUserPendingOS);
 		
-		String dirUserBannedS = pathHome + "/SSociety_data/Users/Banned/" + username;
-		File dirUserBanned = new File(dirUserBannedS + "/");
+		String fileUserBannedS = pathHome + "/SSociety_data/Users/Banned/" + username + ".txt";
+		File fileUserBanned = new File(fileUserBannedS);
 		
 		// Here we used the method 'getCanonicalPath' because the 'exists' method isn't case sensitive
 		//   and so, without using the second condition of the statements, a user with username "admin"
@@ -65,9 +70,10 @@ public class Login
 			{
 				Screen.clear();
 				System.out.println("You need to be an admin to have access to the server!");
-				System.out.println("You should do your login on client.");
-				System.out.println("-----------------------------------------------------");
-				System.out.println();
+				System.out.println("You should do your login on Client.");
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 				return false;
 			}
 
@@ -90,35 +96,38 @@ public class Login
 			{
 				Screen.clear();
 				System.out.println("Wrong password!");
-				System.out.println("---------------");
-				System.out.println();
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 				return false;
 			}
 		}
 		
 		// The account is not activated,
 		//   so it checks if the account is sill waiting to be validated by an admin.
-		else if((dirUserPendingA.exists() && dirUserPendingA.getCanonicalPath().equals(dirUserPendingAS)) || (dirUserPendingO.exists() && dirUserPendingO.getCanonicalPath().equals(dirUserPendingOS)))
+		else if((fileUserPendingA.exists() && fileUserPendingA.getCanonicalPath().equals(fileUserPendingAS)) || (fileUserPendingO.exists() && fileUserPendingO.getCanonicalPath().equals(fileUserPendingOS)))
 		{
 			Screen.clear();
 			System.out.println("Your account is not activated yet! :(");
 			System.out.println("Please wait until an admin validate your registration.");
 			System.out.println("Sorry for any inconvenience.");
-			System.out.println("------------------------------------------------------");
-			System.out.println();
+			System.out.println("---------------------------");
+			cons.readPassword("Press Enter to continue...");
+			Screen.clear();
 			return false;
 		}
 		
 		// The account is neither registered nor activated,
 		//   so it checks if the account was banned by an admin.
-		else if(dirUserBanned.exists() && dirUserBanned.getCanonicalPath().equals(dirUserBannedS))
+		else if(fileUserBanned.exists() && fileUserBanned.getCanonicalPath().equals(fileUserBannedS))
 		{
 			Screen.clear();
 			System.out.println("Your account was banned by an admin! :(");
-			System.out.println("You won't be able to join SSociety again.");
+			System.out.println("You won't be able to join SSociety unless an admin unbans your account.");
 			System.out.println("Sorry for any inconvenience.");
-			System.out.println("-----------------------------------------");
-			System.out.println();
+			System.out.println("---------------------------");
+			cons.readPassword("Press Enter to continue...");
+			Screen.clear();
 			return false;
 		}
 		
@@ -128,8 +137,9 @@ public class Login
 			Screen.clear();
 			System.out.println("This account doesn't exist!");
 			System.out.println("Please make sure you are entering the correct username.");
-			System.out.println("-------------------------------------------------------");
-			System.out.println();
+			System.out.println("---------------------------");
+			cons.readPassword("Press Enter to continue...");
+			Screen.clear();
 			return false;
 		}
 	}

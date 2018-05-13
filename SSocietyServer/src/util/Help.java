@@ -70,5 +70,25 @@ public class Help
 			System.out.println("blablabla Home.AccountsManagement.creationScreen");
 			System.out.println("------------------------------------------------");
 		}
+		
+		else if(current.equals("Home.AccountsManagement.pendingScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.AccountsManagement.pendingScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.AccountsManagement.pendingUScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.AccountsManagement.pendingUScreen");
+			System.out.println("------------------------------------------------");
+		}
 	}
 }
