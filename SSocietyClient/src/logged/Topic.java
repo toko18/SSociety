@@ -20,6 +20,7 @@ public class Topic {
 	private String allTopics = pathHome + "/SSociety_data/Topics";
 	
 	ArrayList<String> userTopics = new ArrayList<String>();
+	ArrayList<String> receiveLike = new ArrayList<String>();
 	
 	Topic (ArrayList<String> a, String u)
 	{
@@ -29,9 +30,9 @@ public class Topic {
 	public void openTopic(int topic) throws IOException
 	{
 		File postsFolder = new File(allTopics + "/" + userTopics.get(topic) + "/Posts");
-		System.out.println("------------------------------");
+		System.out.println("-------------------------");
 		System.out.println(userTopics.get(topic));
-		System.out.println("------------------------------");
+		System.out.println("-------------------------");
 		
 		File[] posts = postsFolder.listFiles();
 		
@@ -58,14 +59,16 @@ public class Topic {
 		displayDescription.close();
 		System.out.println();
 		
+		ArrayList<String> authorNames = new ArrayList<String>();
 		for (int i = 1; i <= numberOfPosts; i++) 
 		{
 			FileReader readFile = null;
-			try { readFile = new FileReader(allTopics + "/" + userTopics.get(topic) + "/Posts/" + i + "/post.txt"); } //i é a pasta que contem o comentario 
+			try { readFile = new FileReader(allTopics + "/" + userTopics.get(topic) + "/Posts/" + i + "/post.txt"); } 
 			catch (FileNotFoundException e) {} 
 			BufferedReader displayComment = new BufferedReader(readFile);
 			
-			System.out.println(i + " - " + displayComment.readLine());
+			authorNames.add(displayComment.readLine());
+			System.out.println(i + " - " + authorNames.get(i - 1));
 			System.out.println();
 			
 			line = "";
@@ -78,7 +81,7 @@ public class Topic {
 			
 			displayComment.close();
 			
-			try { readFile = new FileReader(allTopics + "/" + userTopics.get(topic) + "/Posts/" + i + "/likes.txt"); } //i é a pasta que contem o comentario 
+			try { readFile = new FileReader(allTopics + "/" + userTopics.get(topic) + "/Posts/" + i + "/likes.txt"); }
 			catch (FileNotFoundException e) {} 
 			BufferedReader likes = new BufferedReader(readFile);
 			
@@ -96,13 +99,14 @@ public class Topic {
 			System.out.println();
 			System.out.println();
 		}
+		receiveLike = authorNames;
 	}
 	
 	public void actions(String username, int topicNumber) throws IOException
 	{
 		String topic = userTopics.get(topicNumber);
 
-		System.out.println("------------------------------");
+		System.out.println("-------------------------");
 	    System.out.println("Down here you can like a comment, post in this topic and unsubscribe this topic.");
 	    System.out.println();
 	    System.out.println("Write /like + space + post number to like a post.");
@@ -112,7 +116,7 @@ public class Topic {
 	    System.out.println("write /unfavourite to delete this topic from your favorites");
 	    System.out.println("Write /unsubscribe to unsubscribe this topic.");
 	    System.out.println("Write /back to leave this topic");
-	    System.out.println("------------------------------");
+	    System.out.println("-------------------------");
 	    
 	    String action = "";
 	    System.out.println();
@@ -163,6 +167,26 @@ public class Topic {
 						addToFile.write(topic + "|" + chosenPost);
 						addToFile.newLine();
 						addToFile.close();
+						
+						File likesReceived = new File(pathHome + "/SSociety_data/Users/AllUsers/" + receiveLike.get(chosenPost - 1) + "/received likes.txt");
+						FileReader readFile = new FileReader(likesReceived);
+						BufferedReader readFromFile = new BufferedReader(readFile);
+						
+						int receivedLikes = Integer.parseInt(readFromFile.readLine());
+						receivedLikes++;
+						readFromFile.close();
+						
+						File newLikesReceived = new File(pathHome + "/SSociety_data/Users/AllUsers/" + receiveLike.get(chosenPost - 1) + "/new received likes.txt");
+						newLikesReceived.createNewFile();
+						write = new FileWriter(newLikesReceived,true);
+						addToFile = new BufferedWriter(write);
+						
+						addToFile.write(String.valueOf(receivedLikes));
+						addToFile.newLine();
+						addToFile.close();
+						
+						likesReceived.delete();
+						newLikesReceived.renameTo(likesReceived);
 					}
 					
 					Screen.clear();
@@ -202,6 +226,7 @@ public class Topic {
 					BufferedReader readFromFile = new BufferedReader(reader);
 					BufferedWriter writeToFile = new BufferedWriter(writer);
 					
+					boolean decrease = false;
 					String toRemoveUser = topic + "|" + chosenPost;
 					String line = "";
 					while (line != null)
@@ -211,6 +236,10 @@ public class Topic {
 						{
 							writeToFile.write(line);
 							writeToFile.newLine();
+						}
+						else if(line != null && line.equals(toRemoveUser))
+						{
+							decrease = true;
 						}
 					}
 					
@@ -240,6 +269,30 @@ public class Topic {
 					writeToFile.close();
 					topicLikes.delete();
 					newTopicLikes.renameTo(topicLikes);
+					
+					if (decrease)
+					{
+						File likesReceived = new File(pathHome + "/SSociety_data/Users/AllUsers/" + receiveLike.get(chosenPost - 1) + "/received likes.txt");
+						FileReader readFile = new FileReader(likesReceived);
+						readFromFile = new BufferedReader(readFile);
+						
+						int receivedLikes = Integer.parseInt(readFromFile.readLine());
+						receivedLikes--;
+						System.out.println("Aqui");
+						readFromFile.close();
+						
+						File newLikesReceived = new File(pathHome + "/SSociety_data/Users/AllUsers/" + receiveLike.get(chosenPost - 1) + "/new received likes.txt");
+						newLikesReceived.createNewFile();
+						FileWriter write = new FileWriter(newLikesReceived,true);
+						BufferedWriter addToFile = new BufferedWriter(write);
+						
+						addToFile.write(String.valueOf(receivedLikes));
+						addToFile.newLine();
+						addToFile.close();
+						
+						likesReceived.delete();
+						newLikesReceived.renameTo(likesReceived);
+					}
 					
 					Screen.clear();
 					this.openTopic(topicNumber);
@@ -273,8 +326,8 @@ public class Topic {
 					File newPost = new File(allTopics + "/" + topic + "/Posts/" + numberOfPosts);
 					newPost.mkdir();
 					
-					FileWriter text = new FileWriter(allTopics + "/" + topic + "/Posts/" + numberOfPosts + "/post.txt");
-					BufferedWriter addToFile = new BufferedWriter(text);
+					FileWriter write = new FileWriter(allTopics + "/" + topic + "/Posts/" + numberOfPosts + "/post.txt");
+					BufferedWriter addToFile = new BufferedWriter(write);
 					
 					addToFile.write(username);
 					addToFile.newLine();
@@ -287,12 +340,31 @@ public class Topic {
 					String add = topic + "|" + numberOfPosts;
 					
 					File userPost = new File(pathHome + "/SSociety_data/Users/AllUsers/" + username + "/posts.txt");
-					FileWriter postsFile = new FileWriter (userPost);
-					addToFile = new BufferedWriter(postsFile);
+					FileReader read = new FileReader (userPost);
+					BufferedReader readFromFile = new BufferedReader(read);
+					
+					File newUserPost = new File(pathHome + "/SSociety_data/Users/AllUsers/" + username + "/new posts.txt");
+					write = new FileWriter (newUserPost, true);
+					addToFile = new BufferedWriter(write);
+					
+					String line = "";
+					while (line != null)
+					{
+						line = readFromFile.readLine();
+						if (line != null)
+						{
+							addToFile.write(line);
+							addToFile.newLine();
+						}
+					}
 					
 					addToFile.write(add);
 					addToFile.newLine();
+					readFromFile.close();
 					addToFile.close();
+					
+					userPost.delete();
+					newUserPost.renameTo(userPost);
 					
 					Screen.clear();
 					this.openTopic(topicNumber);
@@ -305,6 +377,8 @@ public class Topic {
 					System.out.println();
 					this.openTopic(topicNumber);
 					this.actions(username, topicNumber);
+					viewAction.close();
+					return;
 				}	
 			}
 			else if (keyword.equals("/favorite"))
@@ -356,6 +430,8 @@ public class Topic {
 					System.out.println();
 					this.openTopic(topicNumber);
 					this.actions(username, topicNumber);
+					viewAction.close();
+					return;
 				}
 				
 			}
@@ -453,6 +529,8 @@ public class Topic {
 					System.out.println();
 					this.openTopic(topicNumber);
 					this.actions(username, topicNumber);
+					viewAction.close();
+					return;
 				}
 			}
 			else if (keyword.equals("/back"))
@@ -460,7 +538,8 @@ public class Topic {
 				Home back = new Home(username);
 				Screen.clear();
 				back.displayTopics();
-				break;
+				viewAction.close();
+				return;
 			}
 			
 			Screen.clear();
@@ -468,6 +547,7 @@ public class Topic {
 			System.out.println();
 			this.openTopic(topicNumber);
 			this.actions(username, topicNumber);
+			return;
 		}
 	}
 }

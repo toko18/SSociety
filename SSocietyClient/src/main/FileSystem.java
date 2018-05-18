@@ -19,6 +19,8 @@ public class FileSystem
 		String dir3 = dir2 + "About SSociety/";
 		File d3 = new File(dir3);
 		
+		
+		
 		String file1 = dir3 + "description.txt";
 		File f1 = new File(file1);
 		
@@ -55,7 +57,10 @@ public class FileSystem
 		String file6 = dir9 + "subscriptions.txt";
 		File f6 = new File(file6);
 		
-		if (!d1.exists() || !d2.exists() || !d3.exists() || !f1.exists() || !d4.exists() || !d5.exists() || !d6.exists() || !d7.exists() || !f2.exists() || !d8.exists() || !d9.exists() || !f3.exists() || !f4.exists() || !f5.exists() || !f6.exists())
+		String file7 = dir9 + "received likes.txt";
+		File f7 = new File(file7);
+		
+		if (!d1.exists() || !d2.exists() || !d3.exists() || !f1.exists() || !d4.exists() || !d5.exists() || !d6.exists() || !d7.exists() || !f2.exists() || !d8.exists() || !d9.exists() || !f3.exists() || !f4.exists() || !f5.exists() || !f6.exists() || !f7.exists())
 		{	
 			Screen.clear();
 			System.out.println("Problem found while trying to start the program.");

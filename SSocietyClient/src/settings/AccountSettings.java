@@ -36,10 +36,9 @@ public class AccountSettings {
 			System.out.println("-------------------------");
 			System.out.println("In this section you can change your username, change your password and delete your account.");
 			System.out.println("-------------------------");
-			System.out.println("1 - Change username");
-			System.out.println("2 - Change password");
-			System.out.println("3 - Delete account");
-			System.out.println("4 - Back");
+			System.out.println("1 - Change password");
+			System.out.println("2 - Delete account");
+			System.out.println("3 - Back");
 			
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
 			catch(Exception e) 
@@ -50,44 +49,29 @@ public class AccountSettings {
 			
 			if(chosenOption == 1)
 			{
-				changeUsername();
-			}
-			else if(chosenOption == 2)
-			{
 				changePassword();
 			}
-			else if(chosenOption == 4)
+			else if(chosenOption == 3)
 			{
 				Home back = new Home(username);
 				Screen.clear();
 				back.homeScreen();
-				break;
+				return;
+			}
+			else
+			{
+				Screen.clear();
+				System.out.println("Invalid input! Try again...");
+				System.out.println();
 			}
 		}
-	}
-	
-	private void changeUsername() throws IOException
-	{
-		Screen.clear();
-		String newUsername = cons.readLine("Choose new username: ");
-		File currentDir = new File(userFolder);
-		File newDir = new File(pathHome + "/SSociety_data/Users/AllUsers/" + newUsername);
-		currentDir.renameTo(newDir);
-		
-		username = newUsername;
-		
-		Screen.clear();
-		System.out.println("Username changed successfully!");
-		cons.readLine("Press Enter to return...");
-		Screen.clear();
-		
-		settingsScreen();
 	}
 	
 	private void changePassword() throws IOException
 	{
 		while(true)
 		{
+			Screen.clear();
 			String newPassword = cons.readLine("Choose new Password: ");
 			String repeatPassword = cons.readLine("Write again the password: ");
 			
@@ -115,7 +99,7 @@ public class AccountSettings {
 			else {
 				Screen.clear();
 				System.out.println("Passwords dont't match!");
-				System.out.println("Press Enter to try again");
+				cons.readLine("Press Enter to try again...");
 			}
 		}
 	}

@@ -19,9 +19,9 @@ public class Login {
 	{	
 		String userDirectory = pathHome + "/SSociety_data/Users/AllUsers/" + userName;
 		String userPassword = pathHome + "/SSociety_data/Users/AllUsers/" + userName + "/password.txt";
-		String pendingDirectory = pathHome + "/SSociety_data/Users/PendingOthers/" + userName;
+		String pendingFile = pathHome + "/SSociety_data/Users/PendingOthers/" + userName + ".txt";
 		
-		File checkPending = new File(pendingDirectory);
+		File checkPending = new File(pendingFile);
 		File userDir = new File(userDirectory);
 		
 		

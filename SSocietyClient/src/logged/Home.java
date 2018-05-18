@@ -2,6 +2,8 @@ package logged;
 
 import java.util.ArrayList;
 
+import main.SSocietyClient;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
@@ -13,6 +15,7 @@ import java.io.FileWriter;
 
 import util.Screen;
 import settings.AccountSettings;
+import statistics.UserStats;
 
 public class Home 
 {
@@ -65,10 +68,26 @@ public class Home
 				this.subscribeTopic();
 				return;
 			}
+			else if (chosenOption == 5)
+			{
+				Screen.clear();
+				UserStats stats = new UserStats(username);
+				stats.displayStats();
+				return;
+			}
 			else if (chosenOption == 6) {
 				Screen.clear();
 				AccountSettings changeSettings = new AccountSettings(username);
 				changeSettings.settingsScreen();
+			}
+			else if (chosenOption == 7)
+			{
+				Screen.clear();
+				System.out.println("It's sad to see you go!");
+				cons.readLine("Press Enter to continue...");
+				Screen.clear();
+				SSocietyClient.firstScreen();
+				return;
 			}
 			else 
 			{
@@ -103,9 +122,10 @@ public class Home
 		 }
 	 
 		 getUserTopics.close();
-		 
+		 System.out.println("-------------------------");
 		 System.out.println("Feed");
-		 System.out.println();
+		 System.out.println("-------------------------");
+		 System.out.println("This is your feed. Here you can check the three most recent posts from every topic you sunscribe and like some of the posts");
 		 
 		 Topic userFeed = new Topic(userTopics, username); 
 		 for (int i = 0; i < userTopics.size(); i++)
@@ -115,6 +135,7 @@ public class Home
 		 
 		 while (true)
 		 {
+			 System.out.println("-------------------------");
 			 System.out.println("1 - Back");
 			 try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
 			 catch(Exception e) { chosenOption = 0;}
@@ -136,67 +157,81 @@ public class Home
 	
 	public void displayTopics() throws IOException
 	{
-		int n = 0;
-		int chosenOption = 0;
-		ArrayList<String> userTopics = new ArrayList<String>();
-		
-		FileReader subscriptions = null;
-		try { subscriptions = new FileReader(userFolder + "/subscriptions.txt"); } 
-		catch (FileNotFoundException e) {} 
-		
-		BufferedReader getUserTopics = new BufferedReader(subscriptions);
-		
-		String line = "";
-		
-		while (line != null)
+		while(true)
 		{
-			line = getUserTopics.readLine();
-			if (line != null)
-			{
-				n++;
-				line = line.substring(0, line.length() - 2);
-				userTopics.add(line);
-				System.out.println(n + " - " + line);
-			}
-		}
-		
-		getUserTopics.close();
-		
-		if (n == 0)
-		{
-			System.out.println("You are not subscribed to any topic!");
-			cons.readLine("Press Enter to continue...");
-			Screen.clear();
-			this.homeScreen();
-			return; //ainda tenho que ver se este return aqui faz alguma coisa
-		}
-		
-		System.out.println();
-		n++;
-		System.out.println(n + " - Back");
-		
-		while (true)
-		{
-			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
-			catch(Exception e) { chosenOption = 0;}
+			int n = 0;
+			int chosenOption = 0;
+			ArrayList<String> userTopics = new ArrayList<String>();
 			
-			if (chosenOption >= 1 && chosenOption < n)
+			System.out.println("-------------------------");
+			System.out.println("My Topics");
+			System.out.println("-------------------------");
+			System.out.println("In this section you can see a list of all the topics you subscribe an enter in one of your choice in order to performe actions: like/unlike a post, post a message, unsubscribe a topic and favorite/unfavorite a topic.");
+			System.out.println("-------------------------");
+			
+			FileReader subscriptions = null;
+			try { subscriptions = new FileReader(userFolder + "/subscriptions.txt"); } 
+			catch (FileNotFoundException e) {} 
+			
+			BufferedReader getUserTopics = new BufferedReader(subscriptions);
+			
+			String line = "";
+			
+			while (line != null)
 			{
-				Screen.clear();
-				
-				Topic chosenTopic = new Topic(userTopics, username);
-				chosenTopic.openTopic(chosenOption - 1);
-				chosenTopic.actions(username, chosenOption - 1);
-				return;
-				
+				line = getUserTopics.readLine();
+				if (line != null)
+				{
+					n++;
+					line = line.substring(0, line.length() - 2);
+					userTopics.add(line);
+					System.out.println(n + " - " + line);
+				}
 			}
-			else if (chosenOption == n)
+			
+			getUserTopics.close();
+			
+			if (n == 0)
 			{
+				System.out.println("You are not subscribed to any topic!");
+				cons.readLine("Press Enter to continue...");
 				Screen.clear();
 				this.homeScreen();
 				return;
 			}
+			
+			System.out.println();
+			n++;
+			System.out.println("-------------------------");
+			System.out.println(n + " - Back");
+			
+			while (true)
+			{
+				try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
+				catch(Exception e) { chosenOption = 0;}
+				
+				if (chosenOption >= 1 && chosenOption < n)
+				{
+					Screen.clear();
+					Topic chosenTopic = new Topic(userTopics, username);
+					chosenTopic.openTopic(chosenOption - 1);
+					chosenTopic.actions(username, chosenOption - 1);
+					return;
+					
+				}
+				else if (chosenOption == n)
+				{
+					Screen.clear();
+					this.homeScreen();
+					return;
+				}
+				else {
+					Screen.clear();
+					break;
+				}
+			}
 		}
+		
 	}
 	
 	public void subscribeTopic() throws IOException

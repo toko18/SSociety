@@ -1,5 +1,6 @@
 package main;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,16 +21,16 @@ public class Registration {
 	public int checkRegistration() throws IOException
 	{
 		String allUsersDirectory = pathHome + "/SSociety_data/Users/AllUsers/";
-		String pendingDirectory = pathHome + "/SSociety_data/Users/PendingOthers/";
+		String pending = pathHome + "/SSociety_data/Users/PendingOthers/";
 		
 		File userDir = new File(allUsersDirectory + username);
-		File pendingDir = new File(pendingDirectory + username);
+		File pendingFile = new File(pending + username + ".txt");
 		
 		if(userDir.exists() && userDir.isDirectory())
 		{
 			return 1;
 		}
-		else if (pendingDir.exists() && pendingDir.isDirectory())
+		else if (pendingFile.exists() && pendingFile.isFile())
 		{
 			return 3;
 		}
@@ -46,9 +47,9 @@ public class Registration {
 			}
 		}
 		
-		pendingDir.mkdir();
-		File passwordFile = new File(pendingDirectory + username + "/password.txt");
-		FileWriter addContent = new FileWriter(passwordFile);
+		pendingFile.createNewFile();
+		FileWriter write = new FileWriter(pendingFile);
+		BufferedWriter addContent = new BufferedWriter(write);
 		
 		addContent.write(firstPassword);
 		addContent.close();
