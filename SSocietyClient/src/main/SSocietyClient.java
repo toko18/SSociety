@@ -2,6 +2,7 @@ package main;
 
 import java.io.Console;
 import logged.Home;
+import util.Help;
 import util.Screen;
 
 
@@ -208,8 +209,12 @@ public class SSocietyClient
 			}
 			else if(chosenOption == 3)
 			{
-				//goes to help screen
-				helpScreen();
+				Screen.clear();
+				Help.help();
+				System.out.println();
+				cons.readLine("Press Enter to return..."); //return to the user homescreen
+				Screen.clear();
+				firstScreen();
 				return;
 			}
 			else if(chosenOption == 4)
