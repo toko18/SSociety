@@ -82,6 +82,7 @@ public class UserStats {//this class allows to calculate user statistics and pre
 				totalPosts++; //increments total posts variable
 		}
 		
+		
 		readFromFile.close();
 		return totalPosts; //returns the number of posts
 	}
