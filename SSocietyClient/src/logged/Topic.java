@@ -674,6 +674,8 @@ public class Topic {
 					
 					Home back = new Home(username);
 					Screen.clear(); //if the user is inside topic and unsubscribes the topic the program goes back to the previous menu
+					System.out.println("Topic unsubscribed successfully...");
+					System.out.println();
 					back.displayTopics();
 					viewAction.close();
 					return;

@@ -274,7 +274,7 @@ public class Home
 					n++; //increases n that is the number of the topic. this starts in one.
 					ssocietyTopics.add(line);
 					System.out.println("--------------------------");
-					System.out.println(n + " - " + line);
+					System.out.println(BOLD + n + " - " + line + RESET);
 					
 					System.out.print("Descrição: ");
 					FileReader readDescription = null;
@@ -312,7 +312,7 @@ public class Home
 				try {chosenTopic = Integer.parseInt(cons.readLine("Subscribe Topic: ")); }
 				catch(Exception e) { //ensures that the an integer is inserted by the user
 					Screen.clear();
-					System.out.println("That is not a valid topic. Please try again.");
+					System.out.println("That is not a valid topic. Please try again...");
 					chosenTopic = 0;
 				}
 				
@@ -356,6 +356,8 @@ public class Home
 					readSubscriptions.close();
 					writeToSubscriptions.close();
 					Screen.clear();
+					System.out.println("Topic subscribed successfully...");
+					System.out.println();
 					break;
 					
 				}
@@ -368,6 +370,7 @@ public class Home
 				else {
 					//input not accepted
 					Screen.clear();
+					System.out.println("That is not a valid input! Please try again...");
 					break;
 				}
 			}
