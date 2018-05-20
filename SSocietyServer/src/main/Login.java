@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import util.Screen;
 
+//-------------------------------------------------*Login*-----------------------------------------------------
 // This class is called when the user tries to log in.
 
 public class Login
@@ -27,6 +28,7 @@ public class Login
 		password = new String(p);
 	}
 	
+	//----------------------------------------------checkLogin-------------------------------------------------
 	// The method 'checkLogin' checks if the username and the password are correct.
 	
 	public boolean checkLogin() throws IOException
@@ -123,6 +125,13 @@ public class Login
 		{
 			Screen.clear();
 			System.out.println("Your account was banned by an admin! :(");
+			System.out.println();
+			
+			BufferedReader reader = new BufferedReader(new FileReader(fileUserBanned));
+			System.out.println("Ban message: " + reader.readLine());
+			reader.close();
+			
+			System.out.println();
 			System.out.println("You won't be able to join SSociety unless an admin unbans your account.");
 			System.out.println("Sorry for any inconvenience.");
 			System.out.println("---------------------------");

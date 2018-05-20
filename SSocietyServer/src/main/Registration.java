@@ -6,6 +6,7 @@ import java.io.IOException;
 import util.FileSystem;
 import util.Screen;
 
+//---------------------------------------------*Registration*--------------------------------------------------
 //This class is called when the user tries to register.
 
 public class Registration
@@ -28,6 +29,7 @@ public class Registration
 		password2 = new String(p2);
 	}
 	
+	//--------------------------------------------checkRegistration-----------------------------------------------
 	// The method 'checkRegistration' checks if the username already exists and if it doesn't, registers the new account.
 	
 	public boolean checkRegistration() throws IOException
@@ -96,13 +98,13 @@ public class Registration
 		// If everything is ok, the account will be registered (by calling 'FileSystem.registAdmin') and the registration will succeed.
 		else
 		{
-			// Checking if the entered username is valid (if it doesn't have special characters and isn't null).
+			// Checking if the entered username is valid (if it only has letters and digits and isn't null).
 			
 			if(username.isEmpty())
 			{
 				Screen.clear();
 				System.out.println("Null username!");
-				System.out.println("Try to register using a sequence of characters as username.");
+				System.out.println("Try to register using a sequence of letters and digits as username.");
 				System.out.println("---------------------------");
 				cons.readPassword("Press Enter to continue...");
 				Screen.clear();
@@ -111,10 +113,10 @@ public class Registration
 			
 			for(int i = 0; i < username.length(); i++)
 			{
-				if(username.charAt(i) == '|' || username.charAt(i) == ':')
+				if(!Character.isLetter(username.charAt(i)) && !Character.isDigit(username.charAt(i)))
 				{
 					Screen.clear();
-					System.out.println("Your username cannot contain the special characters '|' and ':'.");
+					System.out.println("Your username can only contain letters and digits.");
 					System.out.println("Try to register using another username.");
 					System.out.println("---------------------------");
 					cons.readPassword("Press Enter to continue...");

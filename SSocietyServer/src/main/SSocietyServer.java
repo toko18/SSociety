@@ -7,13 +7,15 @@ import util.FileSystem;
 import util.Help;
 import util.Screen;
 
-// 'SSocietyServer' is the main class of the program.
+//---------------------------------------------*SSocietyServer*-----------------------------------------------
+// This is the main class of the program.
 
 public class SSocietyServer
 {	
 	// A Console object ('cons') will be used to read the user input.
 	private static Console cons = System.console();
 	
+	//---------------------------------------------First Screen------------------------------------------------
 	// First Screen - this is the initial "screen".
 	// Here, the user can choose between 4 options that will display their respective screen.
 	
@@ -70,6 +72,7 @@ public class SSocietyServer
 		}
 	}
 	
+	//---------------------------------------------Login Screen------------------------------------------------
 	// Login Screen - this is the screen that displays when the user wants to log in.
 	// Here, the user can choose between 3 options that will display their respective screen.
 	
@@ -103,6 +106,9 @@ public class SSocietyServer
 				char[] password;
 				// Boolean value of login success/fail.
 				boolean success = false;
+				
+				System.out.println("Login");
+				System.out.println();
 				
 				// Reads the username.
 				username = cons.readLine("Username: ");
@@ -154,6 +160,7 @@ public class SSocietyServer
 		}
 	}
 	
+	//------------------------------------------Registration Screen--------------------------------------------
 	// Registration Screen - this is the screen that displays when the user wants to register a new account.
 	// Here, the user can choose between 3 options that will display their respective screen.
 	
@@ -188,6 +195,9 @@ public class SSocietyServer
 				char[] password2;
 				// Boolean value of registration success/fail.
 				boolean success = false;
+				
+				System.out.println("Registration");
+				System.out.println();
 				
 				// Reads the username.
 				username = cons.readLine("Choose your username: ");
@@ -243,6 +253,7 @@ public class SSocietyServer
 		}
 	}
 	
+	//----------------------------------------------Help Screen------------------------------------------------
 	// Help Screen - this is the screen that can be called in any other screen, when the user chooses the 'Help' option.
 	// This screen prints instructions on how to interact with the screen where it is called.
 	
@@ -259,7 +270,7 @@ public class SSocietyServer
 		Screen.clear();
 	}
 	
-	// Main
+	//--------------------------------------------------Main------------------------------------------------------
 	
 	public static void main(String[] args)
 	{

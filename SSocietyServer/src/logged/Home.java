@@ -4,6 +4,7 @@ import java.io.Console;
 import util.Help;
 import util.Screen;
 
+//-------------------------------------------------*Home*------------------------------------------------------
 // This is the class that has the screens after an admin logs into the server.
 
 public class Home
@@ -19,6 +20,7 @@ public class Home
 		loggedA = u;
 	}
 	
+	//--------------------------------------------First Screen-------------------------------------------------
 	// First Screen - this is the initial "screen" after the admin logs in.
 	// Here, the admin can choose between 5 options that will display their respective screen.
 	
@@ -83,6 +85,7 @@ public class Home
 		}
 	}
 
+	//--------------------------------------Accounts Management Screen-----------------------------------------
 	// Accounts Management Screen - this is the screen that displays when the admin wants to manage the network accounts.
 	// Here, the admin can choose between 5 options that will display their respective screen.
 	
@@ -145,16 +148,83 @@ public class Home
 		}
 	}
 	
-	public void topicsScreen() //atençao ao numero maximo de mensagens
+	//---------------------------------------Topics Management Screen------------------------------------------
+	// Topics Management Screen - this is the screen that displays when the admin wants to manage the topics.
+	// Here, the admin can choose between 5 options that will display their respective screen.
+	
+	public void topicsScreen()
 	{
+		Screen.clear();
 		
+		int chosenOption = 0;
+		
+		// This loop is constantly displaying the options and waiting for input.
+		// The only way to leave the loop is to insert a valid input.
+		while(true)
+		{
+			System.out.println("Topics Management");
+			System.out.println();
+			System.out.println("1 - Create a new topic");
+			System.out.println("2 - Edit topics");
+			System.out.println("3 - Delete topics");
+			System.out.println("4 - Help");
+			System.out.println("5 - Back");
+			System.out.println();
+			
+			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
+			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
+			catch(Exception e) { chosenOption = 0; }
+			
+			// If the input is 1, it leaves this screen and opens the Creation Screen (from 'TopicsManagement' class).
+			if(chosenOption == 1)
+			{
+				try { TopicsManagement.creationScreen(); }
+				catch (Exception e) { }
+			}
+			
+			// If the input is 2, it leaves this screen and opens the Edit Screen (from 'TopicsManagement' class).
+			else if(chosenOption == 2)
+			{
+				try { TopicsManagement.editScreen(); }
+				catch (Exception e) { }
+			}
+			
+			// If the input is 3, it leaves this screen and opens the Deletion Screen (from 'TopicsManagement' class).
+			else if(chosenOption == 3)
+				TopicsManagement.deletionScreen(loggedA);
+			
+			// If the input is 4, it opens the help screen corresponding to the current one (Topics Management Screen).
+			else if(chosenOption == 4)
+				helpScreen("Home.topicsScreen");
+			
+			// If the input is 5, it leaves this screen and goes back to the previous screen (First Screen).
+			else if(chosenOption == 5)
+			{
+				Screen.clear();
+				// By returning, it will go back to the First Screen.
+				return;
+			}
+			
+			// Else, if the input wasn't 1, 2, 3, 4 or 5, it is invalid (and it doesn't leave the while loop).
+			else
+			{
+				Screen.clear();
+				System.out.println("Invalid input!");
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
+			}
+		}
 	}
+	
+	//---------------------------------------Network Statistics Screen-----------------------------------------
 	
 	public void statisticsScreen()
 	{
 		
 	}
-		
+	
+	//----------------------------------------------Help Screen------------------------------------------------
 	// Help Screen - this is the screen that can be called in any other screen, when the user chooses the 'Help' option.
 	// This screen prints instructions on how to interact with the screen where it is called.
 	

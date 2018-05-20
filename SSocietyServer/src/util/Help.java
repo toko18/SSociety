@@ -1,5 +1,7 @@
 package util;
 
+//-------------------------------------------------*Help*-------------------------------------------------------
+
 // The method ('screen') of this class can be called on any screen (whose name is given as argument)
 //   and will print instructions on how to interact with that screen.
 
@@ -88,6 +90,66 @@ public class Help
 			System.out.println();
 			System.out.println("A \"tutorial\" will display here");
 			System.out.println("blablabla Home.AccountsManagement.pendingUScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.AccountsManagement.banishmentScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.AccountsManagement.banishmentScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.AccountsManagement.banUScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.AccountsManagement.banUScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.AccountsManagement.unbanUScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.AccountsManagement.unbanUScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.topicsScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.topicsScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.TopicsManagement.editScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.TopicsManagement.editScreen");
+			System.out.println("------------------------------------------------");
+		}
+		
+		else if(current.equals("Home.TopicsManagement.deletionScreen"))
+		{
+			System.out.println("------------------------------------------------");
+			System.out.println("You are in the help screen.");
+			System.out.println();
+			System.out.println("A \"tutorial\" will display here");
+			System.out.println("blablabla Home.TopicsManagement.deletionScreen");
 			System.out.println("------------------------------------------------");
 		}
 	}
