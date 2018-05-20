@@ -423,6 +423,11 @@ public class AccountSettings {
 		//   the account folder is deleted.
 		
 		deleteFolder(dirUser);
+		Screen.clear();
+		System.out.println("Your account has been successfully deleted... We hope you come back!");
+		System.out.println();
+		SSocietyClient.firstScreen();
+		return;
 	}
 	
 }
