@@ -80,7 +80,7 @@ public class FileSystem
 		{
 			descriptionAbout.createNewFile();
 			BufferedWriter writer2 = new BufferedWriter(new FileWriter(descriptionAboutS));
-			writer2.write("-1\nDescriçao sobre a SSociety.");
+			writer2.write("-1\nWelcome to SSociety! We are a new community of people that want to destroy the world! Oops, I mean, SSociety is a new social network that is revolutionizing the world of technology because it works only on a terminal! Wow, brilliant, isn’t it?! Ok…you are right, it isn’t. Whatever, this sucks, but there are a lot of ugly things and you keep sucking it...Oops, I mean, there are a lot of things that suck but we use it anyways, so use and abuse this network.");
 			writer2.close();
 		}
 		
@@ -158,16 +158,6 @@ public class FileSystem
 			writer6.write("About SSociety|.\n");
 			writer6.close();
 		}
-		
-		String receivedS = dirAdminS + "received likes.txt";
-		File received = new File(receivedS);
-		if(!received.exists())
-		{
-			received.createNewFile();
-			BufferedWriter writer7 = new BufferedWriter(new FileWriter(receivedS));
-			writer7.write("0");
-			writer7.close();
-		}
 	}
 
 	//---------------------------------------------registAdmin-------------------------------------------------
@@ -222,20 +212,13 @@ public class FileSystem
 		writer2.write("About SSociety|.\n");
 		writer2.close();
 		
-		String receivedS = dirUserS + "received likes.txt";
-		File received = new File(receivedS);
-		received.createNewFile();
-		BufferedWriter writer3 = new BufferedWriter(new FileWriter(receivedS));
-		writer3.write("0");
-		writer3.close();
-		
 		// Whenever a new account is created, the username is written on 'subscriptions.txt' file of
 		//   'About SSociety' topic, since all users are subscribed to this topic by default.
 		File subscriptions = new File(topicsS + "About SSociety/subscriptions.txt");
-		BufferedWriter writerS = new BufferedWriter(new FileWriter(subscriptions, true));
+		BufferedWriter writer3 = new BufferedWriter(new FileWriter(subscriptions, true));
 		
-		writerS.append(u + "\n");
-		writerS.close();
+		writer3.append(u + "\n");
+		writer3.close();
 		
 		// If the new account is for an admin, the username will be written to the 'admins.txt' file.
 		if(t.equals("admins"))
@@ -264,7 +247,7 @@ public class FileSystem
 	// The method 'deleteLike' will be called by the 'deleteAccountData' and 'deletePost' methods.
 	// This method deletes a like (and updates all files with information correspondent to that like), given the topic name,
 	//   the post name and the username of the account that gave the like as arguments.
-	// It requires to modify the 'likes.txt' file of the post and user's folder and modify the 'received likes.txt' file of the post owner.
+	// It requires to modify the 'likes.txt' file of the post and user's folders.
 	
 	public static void deleteLike(String topicName, String postName, String username) throws Exception
 	{	
@@ -315,28 +298,6 @@ public class FileSystem
 		// In the end, it deletes the old file and changes the name of the updated one.
 		userLikes.delete();
 		tempUserLikes.renameTo(userLikes);
-		
-		// Modifying the 'received likes.txt' file of the post owner.
-		
-		// Getting the username of the post owner.
-		File post = new File(dirPostS + "post.txt");
-		BufferedReader readerPost = new BufferedReader(new FileReader(post));
-		String postOwner = readerPost.readLine();
-		readerPost.close();
-		
-		File receivedLikes = new File(allUsersS + postOwner + "/received likes.txt");
-		BufferedReader readerRL = new BufferedReader(new FileReader(receivedLikes));
-		
-		String nLikesS = readerRL.readLine();
-		int nLikes = Integer.parseInt(nLikesS);
-		readerRL.close();
-		
-		BufferedWriter writerRL = new BufferedWriter(new FileWriter(receivedLikes));
-		
-		nLikes--;
-		
-		writerRL.write(Integer.toString(nLikes));
-		writerRL.close();
 	}
 	
 	//-----------------------------------------------deletePost------------------------------------------------

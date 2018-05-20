@@ -22,7 +22,7 @@ public class Home
 	
 	//--------------------------------------------First Screen-------------------------------------------------
 	// First Screen - this is the initial "screen" after the admin logs in.
-	// Here, the admin can choose between 5 options that will display their respective screen.
+	// Here, the admin can choose between 6 options that will display their respective screen.
 	
 	public void firstScreen()
 	{
@@ -36,9 +36,10 @@ public class Home
 			System.out.println();
 			System.out.println("1 - Accounts Management");
 			System.out.println("2 - Topics Management");
-			System.out.println("3 - Network statistics");
-			System.out.println("4 - Help");
-			System.out.println("5 - Logout");
+			System.out.println("3 - Network Statistics");
+			System.out.println("4 - Account Settings");
+			System.out.println("5 - Help");
+			System.out.println("6 - Logout");
 			System.out.println();
 			
 			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
@@ -56,24 +57,43 @@ public class Home
 			// If the input is 3, it leaves this screen and opens the Network Statistics Screen.
 			else if(chosenOption == 3)
 				statisticsScreen();
-				
-			// If the input is 4, it opens the help screen corresponding to the current one (First Screen).
+			
+			// If the input is 4, it leaves this screen and opens the My Account Screen.
 			else if(chosenOption == 4)
+			{
+				boolean loggout = accountScreen();
+				
+				if(loggout)
+				{
+					Screen.clear();
+					System.out.println("You successfully logged out!");
+					System.out.println("---------------------------");
+					cons.readPassword("Press Enter to continue...");
+					Screen.clear();
+					// By returning here, it will go back to 'loginScreen',
+					//   that will return as well, and SSocietyServer's first screen will display.
+					return;
+				}
+			}
+				
+			// If the input is 5, it opens the help screen corresponding to the current one (First Screen).
+			else if(chosenOption == 5)
 				helpScreen("Home.firstScreen");
 					
-			// If the input is 5, the admin logs out, going to the very fist screen (SSocietyServer's first screen).
-			else if(chosenOption == 5)
+			// If the input is 6, the admin logs out, going to the very fist screen (SSocietyServer's first screen).
+			else if(chosenOption == 6)
 			{
 				Screen.clear();
-				System.out.println("You successfully logged out!"); //animation
-				System.out.println("----------------------------");
-				System.out.println();
+				System.out.println("You successfully logged out!");
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
 				// By returning here, it will go back to 'loginScreen',
 				//   that will return as well, and SSocietyServer's first screen will display.
 				return;
 			}
 				
-			// Else, if the input wasn't 1, 2, 3, 4 or 5, it is invalid (and it doesn't leave the while loop).
+			// Else, if the input wasn't 1, 2, 3, 4, 5 or 6, it is invalid (and it doesn't leave the while loop).
 			else
 			{
 				Screen.clear();
@@ -218,10 +238,142 @@ public class Home
 	}
 	
 	//---------------------------------------Network Statistics Screen-----------------------------------------
+	// Network Statistics Screen - this is the screen that displays when the admin wants to see some network statistics.
+	// Here, the admin can choose to see topics or accounts statistics.
 	
 	public void statisticsScreen()
 	{
+		Screen.clear();
 		
+		int chosenOption = 0;
+		
+		// This loop is constantly displaying the options and waiting for input.
+		// The only way to leave the loop is to insert a valid input.
+		while(true)
+		{
+			System.out.println("Network Statistics");
+			System.out.println();
+			System.out.println("1 - Topics Statistics");
+			System.out.println("2 - Accounts Statistics");
+			System.out.println("3 - Help");
+			System.out.println("4 - Back");
+			System.out.println();
+			
+			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
+			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
+			catch(Exception e) { chosenOption = 0; }
+			
+			// If the input is 1, it leaves this screen and opens the Topics Statistics Screen (from 'NetworkStatistics' class).
+			if(chosenOption == 1)
+			{
+				try { NetworkStatistics.topicsScreen(); }
+				catch (Exception e) { }
+			}
+			
+			// If the input is 2, it leaves this screen and opens the Accounts Statistics Screen (from 'NetworkStatistics' class).
+			else if(chosenOption == 2)
+			{
+				try { NetworkStatistics.accountsScreen(); }
+				catch (Exception e) { }
+			}
+			
+			// If the input is 3, it opens the help screen corresponding to the current one (Network Statistics Screen).
+			else if(chosenOption == 3)
+				helpScreen("Home.statisticsScreen");
+			
+			// If the input is 4, it leaves this screen and goes back to the previous screen (First Screen).
+			else if(chosenOption == 4)
+			{
+				Screen.clear();
+				// By returning, it will go back to the First Screen.
+				return;
+			}
+			
+			// Else, if the input wasn't 1, 2, 3 or 4, it is invalid (and it doesn't leave the while loop).
+			else
+			{
+				Screen.clear();
+				System.out.println("Invalid input!");
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
+			}
+		}
+	}
+
+	//----------------------------------------Account Settings Screen------------------------------------------
+	// Account Settings Screen - this is the screen that displays when the admin wants to manage his own account.
+	// Here, the admin can choose to change his account's password or delete the account.
+	// It returns true/false meaning that the user will log out or not after he tries to change the password or delete the account.
+	
+	public boolean accountScreen()
+	{
+		Screen.clear();
+		
+		int chosenOption = 0;
+		
+		// This loop is constantly displaying the options and waiting for input.
+		// The only way to leave the loop is to insert a valid input.
+		while(true)
+		{
+			System.out.println("Account Settings");
+			System.out.println();
+			System.out.println("1 - Change Password");
+			System.out.println("2 - Delete Account");
+			System.out.println("3 - Help");
+			System.out.println("4 - Back");
+			System.out.println();
+			
+			// In case of input not being a number, the 'chosenOption' will be an invalid one (zero, in this case).
+			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
+			catch(Exception e) { chosenOption = 0; }
+			
+			// If the input is 1, it leaves this screen and opens the Change Password Screen (from 'AccountSettings' class).
+			if(chosenOption == 1)
+			{
+				boolean loggout = false;
+				
+				try { loggout = AccountSettings.passwordScreen(loggedA); }
+				catch (Exception e) { }
+				
+				if(loggout)
+					return true; // The user will be forced to log out.
+			}
+			
+			// If the input is 2, it leaves this screen and opens the Delete Account Screen (from 'AccountSettings' class).
+			else if(chosenOption == 2)
+			{
+				boolean loggout = false;
+				
+				try { loggout = AccountSettings.deletionScreen(loggedA); }
+				catch (Exception e) { }
+				
+				if(loggout)
+					return true; // The user will be forced to log out.
+			}
+			
+			// If the input is 3, it opens the help screen corresponding to the current one (Account Settings Screen).
+			else if(chosenOption == 3)
+				helpScreen("Home.accountScreen");
+				
+			// If the input is 4, it leaves this screen and goes back to the previous screen (First Screen).
+			else if(chosenOption == 4)
+			{
+				Screen.clear();
+				// By returning false, it will go back to the First Screen (without logging out).
+				return false;
+			}
+			
+			// Else, if the input wasn't 1, 2, 3 or 4, it is invalid (and it doesn't leave the while loop).
+			else
+			{
+				Screen.clear();
+				System.out.println("Invalid input!");
+				System.out.println("---------------------------");
+				cons.readPassword("Press Enter to continue...");
+				Screen.clear();
+			}
+		}
 	}
 	
 	//----------------------------------------------Help Screen------------------------------------------------

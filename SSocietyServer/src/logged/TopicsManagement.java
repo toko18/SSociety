@@ -11,6 +11,9 @@ import util.FileSystem;
 import util.Help;
 import util.Screen;
 
+//---------------------------------------------*TopicsManagement*----------------------------------------------
+// This is the class that has the screens of the Topics Management's menu.
+
 public class TopicsManagement
 {
 	// A Console object ('cons') will be used to read the user input.
@@ -226,7 +229,6 @@ public class TopicsManagement
 				System.out.println("Current topic description: " + curTopicDescription);
 				System.out.println();
 				System.out.println("------------------------------------------------");
-				System.out.println();
 				
 				String newTopicName = "";
 				int newMaxPosts = 0;
@@ -235,7 +237,10 @@ public class TopicsManagement
 				// Reads the new topic name and checks if it is valid and available.
 				
 				if(!curTopicName.equals("About SSociety"))
+				{
+					System.out.println();
 					newTopicName = cons.readLine("Choose the new name/title: ");
+				}
 				
 				// If the admin wants to keep the current topic's name, will only press Enter (empty String).
 				if(newTopicName.isEmpty())
@@ -287,11 +292,12 @@ public class TopicsManagement
 				
 				// Reads the new maximum limit of posts and checks if it is valid.
 				
-				System.out.println();
-				
 				String newMaxPostsS  = "";
 				if(!curTopicName.equals("About SSociety"))
+				{
+					System.out.println();
 					newMaxPostsS = cons.readLine("Choose the new maximum number of posts that the topic can have: ");
+				}
 				
 				// If the admin wants to keep the current max limit, will only press Enter (empty String).
 				if(newMaxPostsS.isEmpty())

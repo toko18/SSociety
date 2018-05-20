@@ -126,7 +126,10 @@ public class SSocietyServer
 				if(success)
 				{
 					Screen.clear();
-					System.out.println("You are logged in!"); //login animation
+					System.out.println("You are logged in!");
+					System.out.println("---------------------------");
+					cons.readPassword("Press Enter to continue...");
+					Screen.clear();
 					
 					// Creates a Home object and calls his first screen.
 					Home userHome = new Home(username);

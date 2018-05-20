@@ -560,7 +560,7 @@ public class AccountsManagement
 					if(banMessage.isEmpty())
 						banMessage = "The admin didn't write any ban reason.";
 					
-					// Getting the account password.
+					// Getting the account's password.
 					String userPassword = account.getPath() + "/password.txt";
 					BufferedReader reader = new BufferedReader(new FileReader(userPassword));
 					String password = reader.readLine();
