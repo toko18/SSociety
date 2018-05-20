@@ -19,10 +19,11 @@ public class FileSystem
 		String dir3 = dir2 + "About SSociety/";
 		File d3 = new File(dir3);
 		
-		
-		
 		String file1 = dir3 + "description.txt";
 		File f1 = new File(file1);
+		
+		String file9 = dir3 + "subscriptions.txt";
+		File f9 = new File(file9);
 		
 		String dir4 = dir1 + "Users/";
 		File d4 = new File(dir4);
@@ -57,10 +58,14 @@ public class FileSystem
 		String file6 = dir9 + "subscriptions.txt";
 		File f6 = new File(file6);
 		
-		String file7 = dir9 + "received likes.txt";
+		String file7 = dir2 + "topics.txt";
 		File f7 = new File(file7);
 		
-		if (!d1.exists() || !d2.exists() || !d3.exists() || !f1.exists() || !d4.exists() || !d5.exists() || !d6.exists() || !d7.exists() || !f2.exists() || !d8.exists() || !d9.exists() || !f3.exists() || !f4.exists() || !f5.exists() || !f6.exists() || !f7.exists())
+		String dir10 = dir3 + "Posts/";
+		File d10 = new File(dir10);
+
+		
+		if (!d1.exists() || !d2.exists() || !d3.exists() || !f1.exists() || !d4.exists() || !d5.exists() || !d6.exists() || !d7.exists() || !f2.exists() || !d8.exists() || !d9.exists() || !f3.exists() || !f4.exists() || !f5.exists() || !f6.exists() || !f7.exists() || !d10.exists() || !f9.exists())
 		{	
 			Screen.clear();
 			System.out.println("Problem found while trying to start the program.");

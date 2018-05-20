@@ -25,7 +25,7 @@ public class Login {
 		File userDir = new File(userDirectory);
 		
 		
-		if (userDir.exists()) 
+		if (userDir.exists() && userDir.getCanonicalPath().equals(userDirectory)) 
 		{
 			BufferedReader getContent = new BufferedReader(new FileReader(userPassword));
 			String toCheckPassword = getContent.readLine();
@@ -44,7 +44,7 @@ public class Login {
 		}
 		else 
 		{	
-			if(checkPending.exists())
+			if(checkPending.exists() && checkPending.getCanonicalPath().equals(pendingFile))
 			{
 				Screen.clear();
 				System.out.println("This user is waiting admin's approval.");

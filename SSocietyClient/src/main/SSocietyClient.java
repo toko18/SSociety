@@ -1,8 +1,6 @@
 package main;
 
 import java.io.Console;
-import java.io.IOException;
-
 import logged.Home;
 import util.Screen;
 
@@ -12,6 +10,9 @@ public class SSocietyClient
 	private static Console cons = System.console();
 	static String pathHome = System.getProperty("user.home");
 	
+	static final String BOLD = "\033[1m";
+	static final String RESET = "\033[0m";
+	
 	public static void helpScreen()
 	{
 		//open help file
@@ -19,7 +20,7 @@ public class SSocietyClient
 		System.out.print("Press Enter to continue...");
 	}
 	
-	public static void registrationScreen() throws IOException
+	public static void registrationScreen() throws Exception
 	{
 		int chosenOption = 0;
 		
@@ -43,8 +44,9 @@ public class SSocietyClient
 				char[] firstPassword;
 				char[] secondPassword;
 				
-				System.out.println("Registration...");
-				System.out.println();
+				System.out.println("--------------------------");
+				System.out.println(BOLD + "Registration" + RESET);
+				System.out.println("--------------------------");
 				username = cons.readLine("Choose your username: ");
 				firstPassword = cons.readPassword("Choose your password: ");
 				secondPassword = cons.readPassword("Enter chosen password again: ");
@@ -86,7 +88,19 @@ public class SSocietyClient
 				else if (userRegistration.checkRegistration() == 4)
 				{
 					Screen.clear();
-					System.out.println("Your username can not contain the character '|'.");
+					System.out.println("Your username can only contain letters and numbers.");
+					cons.readLine("Press Enter to continue...");
+				}
+				else if (userRegistration.checkRegistration() == 5)
+				{
+					Screen.clear();
+					System.out.println("Your username can not be empty. Try again!");
+					cons.readLine("Press Enter to continue...");
+				}
+				else if (userRegistration.checkRegistration() == 6)
+				{
+					Screen.clear();
+					System.out.println("You have to choose a password that is not empty. Try again!");
 					cons.readLine("Press Enter to continue...");
 				}
 				Screen.clear();
@@ -94,7 +108,7 @@ public class SSocietyClient
 		}
 	}
 	
-	public static void loginScreen () throws IOException
+	public static void loginScreen () throws Exception
 
 	{	
 		int chosenOption = 0;
@@ -121,8 +135,9 @@ public class SSocietyClient
 				String username;
 				char[] password;
 				
-				System.out.println("Login...");
-				System.out.println();
+				System.out.println("--------------------------");
+				System.out.println(BOLD + "Login" + RESET);
+				System.out.println("--------------------------");
 				username = cons.readLine("Username: ");
 				password = cons.readPassword("Password: ");
 				
@@ -152,14 +167,15 @@ public class SSocietyClient
 	}
 	
 	
-	public static void firstScreen() throws IOException
+	public static void firstScreen() throws Exception
 	{	
 		int chosenOption = 0;
 		
 		while(true)
 		{
-			System.out.println("Welcome to SSociety!");
-			System.out.println();
+			System.out.println("--------------------------");
+			System.out.println(BOLD + "Welcome to SSociety!" + RESET);
+			System.out.println("--------------------------");
 			System.out.println("1 - Login");
 			System.out.println("2 - Register");
 			System.out.println("3 - Help");
@@ -195,7 +211,7 @@ public class SSocietyClient
 	}
 	
 	
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args) throws Exception 
 	{	
 		if(!FileSystem.checkFileSystem())
 		{

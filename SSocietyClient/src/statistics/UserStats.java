@@ -17,28 +17,21 @@ public class UserStats {
 	private String pathHome = System.getProperty("user.home");
 	private String userFolder;
 	
+	static final String BOLD = "\033[1m";
+	static final String RESET = "\033[0m";
+	
 	public UserStats(String u)
 	{
 		username = u;
 		userFolder = pathHome + "/SSociety_data/Users/AllUsers/" + username;
 	}
 	
-	public static void statsCounter()
-	{
-		//total de likes nos posts deste utilizador
-		//todos os posts deste utilizador
-		//numero de likes que o utilizador deu
-		//nuemro de subscrições do utilizador
-		
-	}
-	
-	public void displayStats() throws IOException
+	public void displayStats() throws Exception
 	{
 		System.out.println("-------------------------");
-		System.out.println("Your statistics");
+		System.out.println(BOLD + "Your statistics" + RESET);
 		System.out.println("-------------------------");
 		
-		System.out.println("Likes you received on your posts: " + userReceivedLikes());
 		System.out.println("Likes have given on others posts: " + userGivenLikes());
 		System.out.println("Number of posts you have published: " + userTotalPosts());
 		System.out.println("Number of topics you subscribe: " + totalSubscriptions());
@@ -49,20 +42,6 @@ public class UserStats {
 		Screen.clear();
 		back.homeScreen();
 		return;
-		
-	}
-	
-	public int userReceivedLikes() throws IOException
-	{
-		int totalLikes = 0;
-		
-		File readReceivedLikes = new File(userFolder + "/received likes.txt");
-		FileReader read = new FileReader(readReceivedLikes);
-		BufferedReader readFromFile = new BufferedReader(read);
-		
-		totalLikes = Integer.parseInt(readFromFile.readLine());
-		readFromFile.close();
-		return totalLikes;
 		
 	}
 	
@@ -110,7 +89,7 @@ public class UserStats {
 	{
 		int totalSubscriptions = 0;
 		
-		File readGivenLikes = new File(userFolder + "/posts.txt");
+		File readGivenLikes = new File(userFolder + "/subscriptions.txt");
 		FileReader read = new FileReader(readGivenLikes);
 		BufferedReader readFromFile = new BufferedReader(read);
 		

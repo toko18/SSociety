@@ -26,7 +26,8 @@ public class Registration {
 		File userDir = new File(allUsersDirectory + username);
 		File pendingFile = new File(pending + username + ".txt");
 		
-		if(userDir.exists() && userDir.isDirectory())
+		
+		if(userDir.exists() && userDir.isDirectory() && !username.isEmpty())
 		{
 			return 1;
 		}
@@ -39,12 +40,23 @@ public class Registration {
 			return 2;
 		}
 		
-		for (int i = 0; i < username.length(); i++)
+		for(int i = 0; i < username.length(); i++)
 		{
-			if(username.charAt(i) == '|')
+			if(!(Character.isDigit(username.charAt(i)) || Character.isLetter(username.charAt(i))))
 			{
 				return 4;
 			}
+		}
+		
+		if(username.isEmpty())
+		{
+			return 5;
+		}
+		
+		
+		if(firstPassword.equals("") && secondPassword.equals(""))
+		{
+			return 6;
 		}
 		
 		pendingFile.createNewFile();
