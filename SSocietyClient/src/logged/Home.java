@@ -146,9 +146,9 @@ public class Home
 			 System.out.println("This is your feed. Here you can check the five most recent posts from every topic you subscribe and like some of the posts");
 			 for (int i = 0; i < userTopics.size(); i++)
 			 {
-				 userFeed.openTopic(i, 4, 1);
+				 userFeed.openTopic(i, 5, 1);
 			 }
-			 userFeed.actionsFeed(username, 4, 1);
+			 userFeed.actionsFeed(username, 5, 1);
 			 return;
 		 }
 	}
