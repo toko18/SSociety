@@ -3,9 +3,8 @@ package settings;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-
 import logged.Home;
-
+import main.SSocietyClient;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +13,7 @@ import java.io.Console;
 import util.Screen;
 
 public class AccountSettings {
-	
+	//----------------------------------------all the paths used in this class---------------------------------
 	private static String pathHome = System.getProperty("user.home");
 	
 	private static String rootS = pathHome + "/SSociety_data/";
@@ -24,17 +23,18 @@ public class AccountSettings {
 	private static String usersS = rootS + "Users/";
 	
 	private static String allUsersS = usersS + "AllUsers/";
+	//------------------------------------------------------------------------------------------------------------
 	
-	private static Console cons = System.console();
+	private static Console cons = System.console(); //allows the use of the java console in this class
 	
-	private String username;
-	private String userFolder;
+	private String username; //username of the user
+	private String userFolder; //folder of the user in the file System
 	
-	static final String BOLD = "\033[1m";
-	static final String RESET = "\033[0m";
+	static final String BOLD = "\033[1m"; //starts bold
+	static final String RESET = "\033[0m"; //ends bold
 	
 	public AccountSettings(String u)
-	{
+	{//constructor that initializes the variables in this class
 		username = u;
 		userFolder = pathHome + "/SSociety_data/Users/Allusers/" + username;
 	}
@@ -43,8 +43,9 @@ public class AccountSettings {
 	{
 		while (true)
 		{
-			int chosenOption = 0;
+			int chosenOption = 0; //option chosen by the user
 			
+			//what the user sees when he opens this screen
 			System.out.println("-------------------------");
 			System.out.println(BOLD + "Settings" + RESET);
 			System.out.println("-------------------------");
@@ -55,30 +56,36 @@ public class AccountSettings {
 			System.out.println("3 - Back");
 			
 			try { chosenOption = Integer.parseInt(cons.readLine("Insert option number: ")); }
-			catch(Exception e) 
-			{ 
+			catch(Exception e) //ensures that input that is not a int does not crashes the program
+			{ //refreshes the screen
 				chosenOption = 0;
 				Screen.clear();
 			}
 			
 			if(chosenOption == 1)
-			{
+			{//method that changes the password
 				changePassword();
 				return;
 			}
 			else if(chosenOption == 2)
-			{
+			{//method that deletes users account
 				deleteAccountData(username);
+				Screen.clear();
+				System.out.println("Your account has been deleted!");
+				cons.readLine("Press Enter to continue...");
+				Screen.clear();
+				SSocietyClient.firstScreen();
+				return;
 			}
 			else if(chosenOption == 3)
-			{
+			{//go back to user homescreen 
 				Home back = new Home(username);
 				Screen.clear();
 				back.homeScreen();
 				return;
 			}
 			else
-			{
+			{//error message when invalid input has been entered
 				Screen.clear();
 				System.out.println("Invalid input! Try again...");
 				System.out.println();
@@ -97,28 +104,35 @@ public class AccountSettings {
 			String newPassword = new String(nP);
 			String repeatPassword = new String(repeatP);
 			
-			if(newPassword.equals(repeatPassword))
-			{
+			if(newPassword.equals("") && repeatPassword.equals(""))
+			{//check if passwords are not empty
+				Screen.clear();
+				System.out.println("You have to choose a password that is not empty. Try again!");
+				cons.readLine("Press Enter to try again...");
+			}
+			else if(newPassword.equals(repeatPassword))
+			{//passwords match and are not empty
 				File currentPasswordFile = new File(userFolder + "/password.txt");
 				File newPasswordFile = new File(userFolder + "new password.txt");
-				newPasswordFile.createNewFile();
+				newPasswordFile.createNewFile(); //creates new passsword file
 				
 				FileWriter write = new FileWriter(newPasswordFile);
 				BufferedWriter writeNewPassword = new BufferedWriter(write);
-				writeNewPassword.write(newPassword);
+				writeNewPassword.write(newPassword); //writes password to new file
 				
-				currentPasswordFile.delete();
+				currentPasswordFile.delete(); //deletes old password file and renames the most recent on to maintain naming convention
 				newPasswordFile.renameTo(currentPasswordFile);
 				writeNewPassword.close();
 				
-				Screen.clear();
+				Screen.clear();//user sees this message when the password is changed successfully
 				System.out.println("Password changed successfully!");
 				cons.readLine("Press Enter to return...");
 				Screen.clear();
 				
 				settingsScreen();
 			}
-			else {
+			else 
+			{//when the inserted passwords do not match
 				Screen.clear();
 				System.out.println("Passwords dont't match!");
 				cons.readLine("Press Enter to try again...");
