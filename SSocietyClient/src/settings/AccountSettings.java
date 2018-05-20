@@ -344,90 +344,99 @@ public class AccountSettings {
 	//   the methods 'deleteLike', 'deletePost', 'deleteSub' and 'deleteFolder').
 	// It basically deletes all posts, likes and subscriptions that the account has, and then the account folder.
 	
-	public static void deleteAccountData(String u) throws Exception
+	public void deleteAccountData(String u) throws Exception
 	{
 		// These variables are paths/files that will be modified.
-		
-		String dirUserS = allUsersS + u + "/";
-		File dirUser = new File(dirUserS);
-		
-		String likesUserS = dirUserS + "likes.txt";
-		File likesUser = new File(likesUserS);
-		BufferedReader readerLikes = new BufferedReader(new FileReader(likesUser));
-		
-		String postsUserS = dirUserS + "posts.txt";
-		File postsUser = new File(postsUserS);
-		BufferedReader readerPosts = new BufferedReader(new FileReader(postsUser));
-		
-		String subsUserS = dirUserS + "subscriptions.txt";
-		File subsUser = new File(subsUserS);
-		BufferedReader readerSubs = new BufferedReader(new FileReader(subsUser));
-		
-		// Auxiliary variable.
-		String line;
-		
-		// Deleting likes that the user has done.
-		
-		// Passing the lines of the 'likes.txt' file to an Array List because it will be constantly modifying:
-		//   we can't simply read each line and delete the like in a loop because the file will change.
-		ArrayList<String> likesToDel = new ArrayList<String>();
-		while((line = readerLikes.readLine()) != null)
-			likesToDel.add(line);
-		
-		readerLikes.close();
-		
-		for(String likeDel : likesToDel)
+		if (!username.equals("admin"))
 		{
-			String topicName = likeDel.substring(0, likeDel.indexOf('|'));
-			String postName = likeDel.substring(likeDel.indexOf('|') + 1);
+			String dirUserS = allUsersS + u + "/";
+			File dirUser = new File(dirUserS);
 			
-			deleteLike(topicName, postName, u);
+			String likesUserS = dirUserS + "likes.txt";
+			File likesUser = new File(likesUserS);
+			BufferedReader readerLikes = new BufferedReader(new FileReader(likesUser));
+			
+			String postsUserS = dirUserS + "posts.txt";
+			File postsUser = new File(postsUserS);
+			BufferedReader readerPosts = new BufferedReader(new FileReader(postsUser));
+			
+			String subsUserS = dirUserS + "subscriptions.txt";
+			File subsUser = new File(subsUserS);
+			BufferedReader readerSubs = new BufferedReader(new FileReader(subsUser));
+			
+			// Auxiliary variable.
+			String line;
+			
+			// Deleting likes that the user has done.
+			
+			// Passing the lines of the 'likes.txt' file to an Array List because it will be constantly modifying:
+			//   we can't simply read each line and delete the like in a loop because the file will change.
+			ArrayList<String> likesToDel = new ArrayList<String>();
+			while((line = readerLikes.readLine()) != null)
+				likesToDel.add(line);
+			
+			readerLikes.close();
+			
+			for(String likeDel : likesToDel)
+			{
+				String topicName = likeDel.substring(0, likeDel.indexOf('|'));
+				String postName = likeDel.substring(likeDel.indexOf('|') + 1);
+				
+				deleteLike(topicName, postName, u);
+			}
+			
+			// Deleting posts that the user has done.
+			
+			// Passing the lines of the 'posts.txt' file to an Array List because it will be constantly modifying:
+			//   we can't simply read each line and delete the post in a loop because the file will change.
+			ArrayList<String> postsToDel = new ArrayList<String>();
+			while((line = readerPosts.readLine()) != null)
+				postsToDel.add(line);
+			
+			readerPosts.close();
+			
+			for(String postDel : postsToDel)
+			{
+				String topicName = postDel.substring(0, postDel.indexOf('|'));
+				String postName = postDel.substring(postDel.indexOf('|') + 1);
+				
+				deletePost(topicName, postName);
+			}
+			
+			// Deleting subscriptions that the user has done.
+			
+			// Passing the lines of the 'subscriptions.txt' file to an Array List because it will be constantly modifying:
+			//   we can't simply read each line and delete the subscription in a loop because the file will change.
+			ArrayList<String> subsToDel = new ArrayList<String>();
+			while((line = readerSubs.readLine()) != null)
+				subsToDel.add(line);
+			
+			readerSubs.close();
+			
+			for(String subDel : subsToDel)
+			{
+				String topicName = subDel.substring(0, subDel.indexOf('|'));
+				
+				deleteSub(topicName, u);
+			}
+			
+			// Now that all posts, likes and subscriptions that the account had are deleted and the files updated,
+			//   the account folder is deleted.
+			
+			deleteFolder(dirUser);
+			Screen.clear();
+			System.out.println("Your account has been successfully deleted... We hope you come back!");
+			System.out.println();
+			SSocietyClient.firstScreen();
+			return;
 		}
-		
-		// Deleting posts that the user has done.
-		
-		// Passing the lines of the 'posts.txt' file to an Array List because it will be constantly modifying:
-		//   we can't simply read each line and delete the post in a loop because the file will change.
-		ArrayList<String> postsToDel = new ArrayList<String>();
-		while((line = readerPosts.readLine()) != null)
-			postsToDel.add(line);
-		
-		readerPosts.close();
-		
-		for(String postDel : postsToDel)
+		else
 		{
-			String topicName = postDel.substring(0, postDel.indexOf('|'));
-			String postName = postDel.substring(postDel.indexOf('|') + 1);
-			
-			deletePost(topicName, postName);
+			Screen.clear();
+			System.out.println("This account can not be deleted...");
+			System.out.println();
+			settingsScreen();
+			return;
 		}
-		
-		// Deleting subscriptions that the user has done.
-		
-		// Passing the lines of the 'subscriptions.txt' file to an Array List because it will be constantly modifying:
-		//   we can't simply read each line and delete the subscription in a loop because the file will change.
-		ArrayList<String> subsToDel = new ArrayList<String>();
-		while((line = readerSubs.readLine()) != null)
-			subsToDel.add(line);
-		
-		readerSubs.close();
-		
-		for(String subDel : subsToDel)
-		{
-			String topicName = subDel.substring(0, subDel.indexOf('|'));
-			
-			deleteSub(topicName, u);
-		}
-		
-		// Now that all posts, likes and subscriptions that the account had are deleted and the files updated,
-		//   the account folder is deleted.
-		
-		deleteFolder(dirUser);
-		Screen.clear();
-		System.out.println("Your account has been successfully deleted... We hope you come back!");
-		System.out.println();
-		SSocietyClient.firstScreen();
-		return;
 	}
-	
 }
