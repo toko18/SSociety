@@ -49,7 +49,7 @@ public class AccountSettings {
 			System.out.println("-------------------------");
 			System.out.println(BOLD + "Settings" + RESET);
 			System.out.println("-------------------------");
-			System.out.println("In this section you can change your username, change your password and delete your account.");
+			System.out.println("In this section you can change your password and delete your account.");
 			System.out.println("-------------------------");
 			System.out.println("1 - Change password");
 			System.out.println("2 - Delete account");

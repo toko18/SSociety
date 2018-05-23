@@ -14,13 +14,6 @@ public class SSocietyClient
 	static final String BOLD = "\033[1m"; //starts use of bold
 	static final String RESET = "\033[0m"; //stops writing in bold
 	
-	public static void helpScreen() //help screen that will appear wen the program starts
-	{
-		//open help file
-		
-		System.out.print("Press Enter to continue...");
-	}
-	
 	public static void registrationScreen() throws Exception //called when the 
 	{
 		int chosenOption = 0; //option that chekcs if the user wants to proceed with the registration or go back

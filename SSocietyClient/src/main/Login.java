@@ -18,11 +18,14 @@ public class Login {
 	{	
 		String userDirectory = pathHome + "/SSociety_data/Users/AllUsers/" + userName; //possible path to user folder
 		String userPassword = pathHome + "/SSociety_data/Users/AllUsers/" + userName + "/password.txt"; //possible path to user password
-		String pendingFile = pathHome + "/SSociety_data/Users/PendingOthers/" + userName + ".txt"; //possible path to file in pending users folder
+		String pendingUsers = pathHome + "/SSociety_data/Users/PendingOthers/" + userName + ".txt"; //possible path to file in pending users folder
+		String pendingAdmins = pathHome + "/SSociety_data/Users/PendingAdmins/" + userName + ".txt"; //possible path to file in pending admins folder
+		String banned = pathHome + "/SSociety_data/Users/Banned/" + userName + ".txt"; //possible path to file in banned folder
 		
-		File checkPending = new File(pendingFile); //file to check pending
+		File checkPendingUsers = new File(pendingUsers); //file to check pending user
+		File checkPendingAdmins = new File(pendingAdmins); //file to check pending admin
 		File userDir = new File(userDirectory); //file to check existence of user directory
-		
+		File checkBannedUser = new File(banned); //file to check if user has been banned
 		
 		if (userDir.exists() && userDir.getCanonicalPath().equals(userDirectory)) 
 		{//check if user directory exists in accepted users folder
@@ -43,11 +46,29 @@ public class Login {
 		}
 		else 
 		{	
-			if(checkPending.exists() && checkPending.getCanonicalPath().equals(pendingFile))
-			{//if the user is waiting in pendings folder. waits for admin
+			if(checkPendingUsers.exists() && checkPendingUsers.getCanonicalPath().equals(pendingUsers))
+			{//if the user is waiting in pending users folder. waits for admin
 				Screen.clear();
 				System.out.println("This user is waiting admin's approval.");
 				System.out.println("Please wait for the decision...");
+			}
+			else if(checkPendingAdmins.exists() && checkPendingAdmins.getCanonicalPath().equals(pendingAdmins))
+			{//if admin is waiting in pending admins folder. waits for super admin
+				Screen.clear();
+				System.out.println("This admin is waiting another admin's approval");
+				System.out.println("Please wait for the decision...");
+			}
+			else if(checkBannedUser.exists() && checkBannedUser.getCanonicalPath().equals(banned))
+			{//if user has been banned
+				Screen.clear();
+				System.out.println("Your account has been banned by an admin.");
+				
+				BufferedReader readReason = new BufferedReader(new FileReader(banned)); //buffer that is going to read the reason form the file
+				String reason = readReason.readLine();
+				readReason.close();
+				
+				System.out.println("Reason: " + reason); //print s reason string
+				System.out.println();
 			}
 			else
 			{ //when the user is not registered

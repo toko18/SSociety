@@ -206,6 +206,8 @@ public class Topic {
 					}
 					
 					Screen.clear();
+					System.out.println("You liked a post!");
+					System.out.println();
 					this.openTopic(topicNumber, n, f);
 					this.actions(username, topicNumber, n, f);
 					return;
@@ -288,6 +290,8 @@ public class Topic {
 					newPostLikes.renameTo(postLikes);
 					
 					Screen.clear();
+					System.out.println("You unliked a post...");
+					System.out.println();
 					this.openTopic(topicNumber, n, f);
 					this.actions(username, topicNumber, n, f);
 					return;
@@ -480,6 +484,8 @@ public class Topic {
 					newUserPost.renameTo(userPost);  //rename new posts.txt to posts.txt to maintain names
 					
 					Screen.clear();
+					System.out.println("Your post has been published!");
+					System.out.println();
 					this.openTopic(topicNumber, n, f);//refreshes the screen and displays everything again but updated
 					this.actions(username, topicNumber, n, f);
 					return;
@@ -539,6 +545,8 @@ public class Topic {
 					newSubscriptions.renameTo(subscriptions);
 					
 					Screen.clear();
+					System.out.println("Topic favorited successfully!");
+					System.out.println();
 					this.openTopic(topicNumber, n, f);//refreshes the screen and displays everything again but updated
 					this.actions(username, topicNumber, n, f);
 					return;
@@ -596,6 +604,8 @@ public class Topic {
 					newSubscriptions.renameTo(subscriptions);
 					
 					Screen.clear();
+					System.out.println("Topic unfavorited successfully...");
+					System.out.println();
 					this.openTopic(topicNumber, n, f);;//refreshes the screen and displays everything again but updated
 					this.actions(username, topicNumber, n, f);
 					return;
@@ -786,6 +796,8 @@ public class Topic {
 					}
 					//refresh and updates the screen
 					Screen.clear();
+					System.out.println("You liked a post!");
+					System.out.println();
 					System.out.println("-------------------------");
 					System.out.println(BOLD + "Feed" + RESET);
 					System.out.println("-------------------------");
@@ -900,6 +912,8 @@ public class Topic {
 					
 					//refresh and updates the screen
 					Screen.clear();
+					System.out.println("You unliked a post...");
+					System.out.println();
 					System.out.println("-------------------------");
 					System.out.println(BOLD + "Feed" + RESET);
 					System.out.println("-------------------------");
@@ -918,7 +932,6 @@ public class Topic {
 					//refreshes the screen and displays everything again but updated in case of error
 					Screen.clear();
 					System.out.println("Error! Try again...");
-					e.printStackTrace();
 					System.out.println();
 					
 					System.out.println("-------------------------");

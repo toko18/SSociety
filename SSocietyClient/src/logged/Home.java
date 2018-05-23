@@ -462,10 +462,10 @@ public class Home
 		for (int i = 0; i < a.length; i++)
 		{	//
 			if (a[i] != 1) {
-				System.out.println((i + 1) + " - " + b[i] + " (" + a[i] + " topics)");
+				System.out.println((i + 1) + " - " + b[i] + " (" + a[i] + " posts)");
 			}
 			else {//when number of topics in the last six hours is zero
-				System.out.println((i + 1) + " - " + b[i] + " (" + a[i] + " topic)");
+				System.out.println((i + 1) + " - " + b[i] + " (" + a[i] + " posts)");
 			}
 		}
 		
