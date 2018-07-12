@@ -12,7 +12,8 @@ import java.io.Console;
 
 import util.Screen;
 
-public class AccountSettings {
+public class AccountSettings
+{
 	//----------------------------------------all the paths used in this class---------------------------------
 	private static String pathHome = System.getProperty("user.home");
 	
