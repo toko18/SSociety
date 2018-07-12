@@ -469,7 +469,7 @@ public class Home
 			}
 		}
 		
-		//when the user presses enter goes back to homescreen
+		//when the user presses enter goes back to home screen
 		System.out.println();
 		cons.readLine("Press Enter to return...");
 		Home back = new Home(username);
